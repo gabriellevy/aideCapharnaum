@@ -13,6 +13,11 @@ UniversCapharnaum::UniversCapharnaum(ModeAffichage modeAffichage,
     qsrand(static_cast<uint>(time.msec()));
 }
 
+QString UniversCapharnaum::CARAC_METIER = "Métier";
+QString UniversCapharnaum::CARAC_SEXE = "Sexe";
+QString UniversCapharnaum::CARAC_PEUPLE = "Peuple";
+QString UniversCapharnaum::CARAC_AGE = "Âge";
+
 Hist* UniversCapharnaum::ExecuterGenerateurHistoire()
 {
     // structure typoqie à copier dans votre fonction surclassée ExecuterGenerateurHistoire :

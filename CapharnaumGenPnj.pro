@@ -54,6 +54,7 @@ SOURCES += \
     genhistgenpnj.cpp \
         main.cpp \
     aspectratiolabel.cpp \
+    pnj.cpp \
     universcapharnaum.cpp
 
 HEADERS += \
@@ -83,6 +84,7 @@ HEADERS += \
     ../destinLib/gestionnairecarac.h \
     aspectratiolabel.h \
     genhistgenpnj.h \
+    pnj.h \
     universcapharnaum.h
 
 FORMS += \
