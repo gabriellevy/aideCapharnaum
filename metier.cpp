@@ -58,10 +58,15 @@ QList<QString> Metier::METIERS_MALANDRINS = {
     "Escroc"
 };
 
+QString Metier::COURTISAN = "Courtisan";
+QString Metier::SOLDAT = "Soldat";
+QString Metier::MERCENAIRE = "Mercenaire";
+QString Metier::NOMADE = "Nomade";
+
 QList<QString> Metier::METIERS = {
     "Marchand",
     "Malandrin",
-    "Courtisan",
+     Metier::COURTISAN,
     "Aubergiste",
     "Dresseur/palefrenier",
     "Ingénieur/architecte",
@@ -74,18 +79,23 @@ QList<QString> Metier::METIERS = {
     "chasseur",
     "Eleveur",
     "Pêcheur",
-    "Soldat",
-    "Mercenaire",
+    Metier::SOLDAT,
+    Metier::MERCENAIRE,
     "Banquier/prêteur",
     "Guérisseur/médecin",
     "Prêtre/moine",
     "Vagabond",
-    "nomade",
+    Metier::NOMADE,
     "Artiste",
     "Précepteur",
     "Marin"
 };
 
+bool Metier::EstGuerrier(QString metier)
+{
+    return ((metier.left(Metier::SOLDAT.length()) == Metier::SOLDAT) ||
+            (metier.left(Metier::MERCENAIRE.length()) == Metier::MERCENAIRE));
+}
 
 Metier Metier::MetierAleatoire()
 {
