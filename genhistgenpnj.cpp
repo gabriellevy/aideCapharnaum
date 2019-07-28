@@ -7,6 +7,7 @@
 #include "peuple.h"
 #include "sexe.h"
 #include "age.h"
+#include "../destinLib/execeffet.h"
 
 GenHistGenPnj::GenHistGenPnj(Hist* histoireGeneree):GenHistoire (histoireGeneree)
 {
@@ -161,6 +162,41 @@ Effet* GenHistGenPnj::GenererEffetSelectionSexe()
     return effet;
 }
 
+void DeterminerImageDepuisCaracs()
+{
+    QString sexe = GestionnaireCarac::GetCaracValue(UniversCapharnaum::CARAC_SEXE);
+    int age = GestionnaireCarac::GetCaracValueAsInt(UniversCapharnaum::CARAC_AGE);
+    QString metier = GestionnaireCarac::GetCaracValue(UniversCapharnaum::CARAC_METIER);
+    QString peuple = GestionnaireCarac::GetCaracValue(UniversCapharnaum::CARAC_PEUPLE);
+
+    QList<QString> ToutesLesImagesPossibles = {};
+
+    qDebug()<<"sexe : "<<sexe<<endl;
+    if ( sexe == Sexe::SEXES[0]) {
+        // homme
+        if ( peuple == Peuple::PEUPLES[0] || peuple == Peuple::PEUPLES[1]) // Saabi ou Shiradim
+        {
+            if ( age > 30) {
+                if ( age < 50 ) {
+                    ToutesLesImagesPossibles.push_back(":/images/0d22007cb3d8ca277746a367fd384424.jpg");
+                }
+            }
+        }
+
+    } else if (sexe == Sexe::SEXES[1]) {
+        // femmes
+        if ( age > 15) {
+            if ( age < 40 ) {
+                ToutesLesImagesPossibles.push_back(":/images/3b0d68a856bf507bfd0e2f2e6e626cd9.jpg");
+            }
+        }
+    }
+
+    QString portrait = ToutesLesImagesPossibles[rand() % ToutesLesImagesPossibles.length()];
+
+    Univers::ME->GetExecHistoire()->GetExecEffetActuel(false)->ChargerImage(portrait);
+}
+
 void GenHistGenPnj::GenererEvtsAccueil()
 {
     /*Evt* Debut = */this->AjouterEvt("Debut", "Génération du eprso par les choix");
@@ -168,10 +204,7 @@ void GenHistGenPnj::GenererEvtsAccueil()
     GenererEffetSelectionPeuple();
     GenererEffetSelectionSexe();
 
-    m_GenerateurEvt->AjouterEffetNarration("Choix terminé", DeterminerImageDepuisCaracs(), "FinGeneration");
-}
-
-QString GenHistGenPnj::DeterminerImageDepuisCaracs()
-{
-    return ":/images/0d22007cb3d8ca277746a367fd384424.jpg";
+    m_GenerateurEvt->AjouterEffetCallbackDisplay(
+                DeterminerImageDepuisCaracs,
+                "Choix terminé", "", "FinGeneration" );
 }
