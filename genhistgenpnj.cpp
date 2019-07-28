@@ -6,6 +6,7 @@
 #include "metier.h"
 #include "peuple.h"
 #include "sexe.h"
+#include "age.h"
 
 GenHistGenPnj::GenHistGenPnj(Hist* histoireGeneree):GenHistoire (histoireGeneree)
 {
@@ -62,6 +63,9 @@ Effet* GenHistGenPnj::GenererEffetSelectionPeuple()
     Peuple peupleAlCaph2(Peuple::AleatoireCapharnaum());
     Choix* choixAleatoireCaph = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
                  "ALEATOIRE COMPLET", UniversCapharnaum::CARAC_PEUPLE, peupleAlCaph2.m_Peuple);
+    // Age aléatoire aussi
+    Age AgeAl2(Age::AgeAleatoire());
+    choixAleatoireCaph->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_AGE, QString::number(AgeAl2.m_Age));
     //sexe aléatoire aussi :
     Sexe SexeAl2(Sexe::Aleatoire());
     choixAleatoireCaph->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_SEXE, SexeAl2.m_Sexe);
@@ -94,6 +98,9 @@ Effet* GenHistGenPnj::GenererEffetSelectionMetier()
     // peuple aléatoire aussi :
     Peuple peupleAlCaph2(Peuple::AleatoireCapharnaum());
     choixAleatoireComplet->AjouterChangeurDeCarac(UniversCapharnaum::CARAC_PEUPLE, peupleAlCaph2.m_Peuple);
+    // Age aléatoire aussi
+    Age AgeAl2(Age::AgeAleatoire());
+    choixAleatoireComplet->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_AGE, QString::number(AgeAl2.m_Age));
     //sexe aléatoire aussi :
     Sexe SexeAl2(Sexe::Aleatoire());
     choixAleatoireComplet->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_SEXE, SexeAl2.m_Sexe);
@@ -102,6 +109,33 @@ Effet* GenHistGenPnj::GenererEffetSelectionMetier()
     return effet;
 }
 
+
+Effet* GenHistGenPnj::GenererEffetSelectionAge()
+{
+    Effet* effet = m_GenerateurEvt->AjouterEffetNarration("Quel est l'âge de votre pnj ?");
+
+    Age AgeAl(Age::AgeAleatoire());
+    Choix* choixAleatoire = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
+                "Aleatoire", UniversCapharnaum::CARAC_AGE, QString::number(AgeAl.m_Age));
+
+    for (int i = 0 ; i < Age::TRANCHES.length(); ++i) {
+        Age age(Age::TRANCHES[i]);
+        m_GenerateurEvt->AjouterChoixChangeurDeCarac(
+                   age.m_Tranche, UniversCapharnaum::CARAC_AGE, ""+age.m_Age);
+
+    }
+
+    // mène direct à la fin de la génération en aléatoire complet :
+    Age AgeAl2(Age::AgeAleatoire());
+    Choix* choixAleatoireComplet = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
+                "ALEATOIRE COMPLET", UniversCapharnaum::CARAC_AGE, QString::number(AgeAl2.m_Age));
+    //sexe aléatoire aussi :
+    Sexe SexeAl2(Sexe::Aleatoire());
+    choixAleatoireComplet->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_SEXE, SexeAl2.m_Sexe);
+    choixAleatoireComplet->m_GoToEffetId = "FinGeneration";
+
+    return effet;
+}
 
 Effet* GenHistGenPnj::GenererEffetSelectionSexe()
 {
@@ -122,6 +156,7 @@ Effet* GenHistGenPnj::GenererEffetSelectionSexe()
     Sexe SexeAl2(Sexe::Aleatoire());
     Choix* choixAleatoireComplet = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
                  "ALEATOIRE COMPLET", UniversCapharnaum::CARAC_SEXE, SexeAl2.m_Sexe);
+    choixAleatoireComplet->m_GoToEffetId = "FinGeneration";
 
     return effet;
 }

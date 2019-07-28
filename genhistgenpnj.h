@@ -19,6 +19,7 @@ protected:
 
     Effet* GenererEffetSelectionMetier();
     Effet* GenererEffetSelectionPeuple();
+    Effet* GenererEffetSelectionAge();
     Effet* GenererEffetSelectionSexe();
 
     QString DeterminerImageDepuisCaracs();
