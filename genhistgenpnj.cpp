@@ -2,8 +2,14 @@
 #include "../destinLib/gestionnairecarac.h"
 #include "universcapharnaum.h"
 #include "pnj.h"
+#include <QTime>
+#include "metier.h"
 
-GenHistGenPnj::GenHistGenPnj(Hist* histoireGeneree):GenHistoire (histoireGeneree) {}
+GenHistGenPnj::GenHistGenPnj(Hist* histoireGeneree):GenHistoire (histoireGeneree)
+{
+    QTime time = QTime::currentTime();
+    qsrand(static_cast<uint>(time.msec()));
+}
 
 Hist* GenHistGenPnj::GenererHistoire()
 {
@@ -36,10 +42,20 @@ Effet* GenHistGenPnj::GenererEffetSelectionMetier()
 {
     Effet* effet = m_GenerateurEvt->AjouterEffetNarration("Quel est le métier de votre pnj ?");
 
-    Choix* choixMarchand = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
-                "Marchand", UniversCapharnaum::CARAC_METIER, "Marchand");
-    Choix* choixCourtisan = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
-                "Courtisan", UniversCapharnaum::CARAC_METIER, "Courtisan");
+    Metier metieAll(Metier::MetierAleatoire());
+    Choix* choixAleatoire = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
+                 "Aleatoire", UniversCapharnaum::CARAC_METIER, metieAll.m_MetierFInal);
+
+    for (int i = 0 ; i < Metier::METIERS.length(); ++i) {
+        Metier metier(Metier::METIERS[i]);
+        Choix* choixCourtisan = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
+                    metier.m_GroupeMetier, UniversCapharnaum::CARAC_METIER, metier.m_MetierFInal);
+
+    }
+
+    // mène direct à la fin de la génération en aléatoire complet :
+    Choix* choixAleatoireComplet = m_GenerateurEvt->AjouterChoixVide();
+    choixAleatoireComplet->m_Text = "ALEATOIRE COMPLET";
 
     return effet;
 }

@@ -6,10 +6,7 @@
 
 Pnj::Pnj(QString id, QString nom, QString description, QString CheminImagePortrait)
     :DPerso(id, nom, description, CheminImagePortrait)
-{
-    QTime time = QTime::currentTime();
-    qsrand(static_cast<uint>(time.msec()));
-}
+{}
 
 void Pnj::InitialiserPerso()
 {
