@@ -3,7 +3,6 @@
 
 Metier::Metier(QString id):m_GroupeMetier(id)
 {
-
     // détermination du métier final parmi els sous métiers possibles à partir du métier déterminé
     if (id == "Artisan") {
         m_MetierFInal = METIERS_ARTISAN[rand() % METIERS_ARTISAN.length()];

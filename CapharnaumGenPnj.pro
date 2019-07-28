@@ -55,6 +55,7 @@ SOURCES += \
         main.cpp \
     aspectratiolabel.cpp \
     metier.cpp \
+    peuple.cpp \
     pnj.cpp \
     universcapharnaum.cpp
 
@@ -86,6 +87,7 @@ HEADERS += \
     aspectratiolabel.h \
     genhistgenpnj.h \
     metier.h \
+    peuple.h \
     pnj.h \
     universcapharnaum.h
 
@@ -103,3 +105,8 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    images.qrc
+
+DISTFILES +=
