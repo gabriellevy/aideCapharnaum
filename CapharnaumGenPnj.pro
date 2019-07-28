@@ -57,6 +57,7 @@ SOURCES += \
     metier.cpp \
     peuple.cpp \
     pnj.cpp \
+    sexe.cpp \
     universcapharnaum.cpp
 
 HEADERS += \
@@ -89,6 +90,7 @@ HEADERS += \
     metier.h \
     peuple.h \
     pnj.h \
+    sexe.h \
     universcapharnaum.h
 
 FORMS += \

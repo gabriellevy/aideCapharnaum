@@ -5,6 +5,7 @@
 #include <QTime>
 #include "metier.h"
 #include "peuple.h"
+#include "sexe.h"
 
 GenHistGenPnj::GenHistGenPnj(Hist* histoireGeneree):GenHistoire (histoireGeneree)
 {
@@ -61,6 +62,9 @@ Effet* GenHistGenPnj::GenererEffetSelectionPeuple()
     Peuple peupleAlCaph2(Peuple::AleatoireCapharnaum());
     Choix* choixAleatoireCaph = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
                  "ALEATOIRE COMPLET", UniversCapharnaum::CARAC_PEUPLE, peupleAlCaph2.m_Peuple);
+    //sexe aléatoire aussi :
+    Sexe SexeAl2(Sexe::Aleatoire());
+    choixAleatoireCaph->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_SEXE, SexeAl2.m_Sexe);
     choixAleatoireCaph->m_GoToEffetId = "FinGeneration";
 
     return effet;
@@ -90,7 +94,34 @@ Effet* GenHistGenPnj::GenererEffetSelectionMetier()
     // peuple aléatoire aussi :
     Peuple peupleAlCaph2(Peuple::AleatoireCapharnaum());
     choixAleatoireComplet->AjouterChangeurDeCarac(UniversCapharnaum::CARAC_PEUPLE, peupleAlCaph2.m_Peuple);
+    //sexe aléatoire aussi :
+    Sexe SexeAl2(Sexe::Aleatoire());
+    choixAleatoireComplet->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_SEXE, SexeAl2.m_Sexe);
     choixAleatoireComplet->m_GoToEffetId = "FinGeneration";
+
+    return effet;
+}
+
+
+Effet* GenHistGenPnj::GenererEffetSelectionSexe()
+{
+    Effet* effet = m_GenerateurEvt->AjouterEffetNarration("Quel est le sexe de votre pnj ?");
+
+    Sexe SexeAl(Sexe::Aleatoire());
+    Choix* choixAleatoire = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
+                 "Aleatoire", UniversCapharnaum::CARAC_SEXE, SexeAl.m_Sexe);
+
+    for (int i = 0 ; i < Sexe::SEXES.length(); ++i) {
+        Sexe sexe(Sexe::SEXES[i]);
+        m_GenerateurEvt->AjouterChoixChangeurDeCarac(
+                    sexe.m_Sexe, UniversCapharnaum::CARAC_SEXE, sexe.m_Sexe);
+
+    }
+
+    // mène direct à la fin de la génération en aléatoire complet :
+    Sexe SexeAl2(Sexe::Aleatoire());
+    Choix* choixAleatoireComplet = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
+                 "ALEATOIRE COMPLET", UniversCapharnaum::CARAC_SEXE, SexeAl2.m_Sexe);
 
     return effet;
 }
@@ -100,6 +131,7 @@ void GenHistGenPnj::GenererEvtsAccueil()
     /*Evt* Debut = */this->AjouterEvt("Debut", "Génération du eprso par les choix");
     GenererEffetSelectionMetier();
     GenererEffetSelectionPeuple();
+    GenererEffetSelectionSexe();
 
     m_GenerateurEvt->AjouterEffetNarration("Choix terminé", DeterminerImageDepuisCaracs(), "FinGeneration");
 }
