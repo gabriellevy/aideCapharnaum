@@ -174,18 +174,40 @@ void DeterminerImageDepuisCaracs()
     qDebug()<<"sexe : "<<sexe<<endl;
     if ( sexe == Sexe::SEXES[0]) {
         // homme
+        if ( peuple == Peuple::PEUPLES[0]) { // Saabi
+            if ( age > 16) {
+                ToutesLesImagesPossibles.push_back(":/images/Saabi1/6e329b69b1b6de105cce57c87e25218c.jpg");
+                ToutesLesImagesPossibles.push_back(":/images/Saabi1/75aec4f5200c1255ac6287380a946a36.jpg");
+
+                if ( Metier::EstGuerrier(metier)) {
+                    ToutesLesImagesPossibles.push_back(":/images/Saabi1/6f4ca791bede07c98c8336ddf5af6162.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Saabi1/74ea82a2ffc8bbb474c9cd8d50a01099.jpg");
+                    if ( age < 40) {
+                        ToutesLesImagesPossibles.push_back(":/images/Saabi1/61d573a7ebd905d8c4d748a942c68b0b.jpg");
+                    }
+                } else if ( metier == Metier::COURTISAN) {
+
+                    ToutesLesImagesPossibles.push_back(":/images/Saabi1/798a074e8cd00f5d61dd1b331228b51f.jpg");
+                }
+            }
+        }
+
+        if ( peuple == Peuple::PEUPLES[1]) // Shiradim
+        {
+            if (age > 55 ) {
+                ToutesLesImagesPossibles.push_back(":/images/Saabi1/6fe2457a0e47202be57fcfd3f72f554f.jpg");
+                ToutesLesImagesPossibles.push_back(":/images/Saabi1/78a2f1f90db5bd56f7dbabf9aedf63a3.jpg");
+            }
+        }
+
         if ( peuple == Peuple::PEUPLES[0] || peuple == Peuple::PEUPLES[1]) // Saabi ou Shiradim
         {
-            if ( Metier::EstGuerrier(metier)) {
+            if ( Metier::EstGuerrier(metier)) {// guerriers :
                 ToutesLesImagesPossibles.push_back(":/images/Saabi1/647409fff9c8dfc7255aa03400951431.jpg");
-            }
-
-            if ( peuple == Peuple::PEUPLES[0]) { // Saabi
                 if ( age > 16) {
+                    ToutesLesImagesPossibles.push_back(":/images/Saabi1/7fa0f20b5fbc4edfb2b18ac8d2e55748.jpg");
                     if ( age < 40) {
-                        if ( Metier::EstGuerrier(metier)) {
-                            ToutesLesImagesPossibles.push_back(":/images/Saabi1/61d573a7ebd905d8c4d748a942c68b0b.jpg");
-                        }
+                        ToutesLesImagesPossibles.push_back(":/images/Saabi1/7059d29a6d90a655382956d76702317a.jpg");
                     }
                 }
             }
@@ -208,6 +230,7 @@ void DeterminerImageDepuisCaracs()
                     }
                     ToutesLesImagesPossibles.push_back(":/images/Saabi1/2d825c6bd95d4598d19cf566632e1a1b.jpg");
                     if ( age < 55 ) {
+                        ToutesLesImagesPossibles.push_back(":/images/Saabi1/8b61811b9aece3ede2361fc7813481b3.jpg");
                         ToutesLesImagesPossibles.push_back(":/images/Saabi1/360cd834aeb3e20a36bdd8ffe12e56c6.jpg");
                         ToutesLesImagesPossibles.push_back(":/images/Saabi1/0d20e9bd8215b319f77f5534fce5f754.jpg");
                         ToutesLesImagesPossibles.push_back(":/images/Saabi1/08729210ba1b31c5b6ea2846994bdd5b.jpg");
@@ -218,6 +241,9 @@ void DeterminerImageDepuisCaracs()
                         ToutesLesImagesPossibles.push_back(":/images/Saabi1/00f4e226c847a2a36c83303dcd99920e.jpg");
                         ToutesLesImagesPossibles.push_back(":/images/Saabi1/04b8bdb2cb6ac6bc988684358e48ae36.jpg");
                         ToutesLesImagesPossibles.push_back(":/images/Saabi1/43ff44b67a58ab8e8e23f4607d5b4687.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Saabi1/6bca6564370cf66e74414d2d4bc5c7c3.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Saabi1/806d238a90f7c608213f1845e1fcee42.jpg");
+
                     }
                 }
                 if ( age < 55 ) {
@@ -233,14 +259,23 @@ void DeterminerImageDepuisCaracs()
             if ( age < 40 ) {
                 if ( metier == Metier::COURTISAN) {
                     ToutesLesImagesPossibles.push_back(":/images/Saabi1/2389ecfa77c450d7b529473d3c6f62a4.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Saabi1/6c0e7528d8626443dbe17dd0a34d9b3b.jpg");
                 }
             }
+        } else {
+            // petites filles
+            ToutesLesImagesPossibles.push_back(":/images/Saabi1/67efe71502e501bb60c3da6cc29559e9.jpg");
+
         }
         if ( peuple == Peuple::PEUPLES[0] || peuple == Peuple::PEUPLES[1]) // Saabi ou Shiradim
         {
             if ( age > 15) {
                 if ( Metier::EstGuerrier(metier)) {
                     ToutesLesImagesPossibles.push_back(":/images/Saabi1/37495a30404751846515af3be96f4765.jpg");
+                }
+                if ( age < 30) {
+                    ToutesLesImagesPossibles.push_back(":/images/Saabi1/7311a06e4a7b88847e3e7feb32a85748.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Saabi1/85baeb2e9ce3192d5d8795d89ad14390.jpg");
                 }
 
                 if ( age < 40 ) {
@@ -269,7 +304,7 @@ void DeterminerImageDepuisCaracs()
         }
     }
 
-    ToutesLesImagesPossibles.push_back(":/images/Saabi1/647409fff9c8dfc7255aa03400951431.jpg");
+    ToutesLesImagesPossibles.push_back(":/images/Saabi1/8be9db52c847046ec1781dccf7bae260.jpg");
 
     if ( false) {
         // gardé pour plus tard :(noirs...)
@@ -279,6 +314,12 @@ void DeterminerImageDepuisCaracs()
         ToutesLesImagesPossibles.push_back(":/images/Saabi1/2e87c412a04f333a43c2d9e1beb6e75c.jpg");
         ToutesLesImagesPossibles.push_back(":/images/Saabi1/430a4f0991cd12d5ef3b05abb60d6c7b.jpg");
         ToutesLesImagesPossibles.push_back(":/images/Saabi1/58ef2fe13375765cb44d54bbcce77507.jpg");
+        ToutesLesImagesPossibles.push_back(":/images/Saabi1/6a9c461a70873fd9bf7140a6dcdfc510.jpg");
+        ToutesLesImagesPossibles.push_back(":/images/Saabi1/6c36ec57f6c9a5541727545d5d100044.jpg");
+        ToutesLesImagesPossibles.push_back(":/images/Saabi1/73606fc49a2870773e97222c4657ec52.jpg");
+        ToutesLesImagesPossibles.push_back(":/images/Saabi1/7885484f3d8cb3231d3794138f514e49.jpg");
+        ToutesLesImagesPossibles.push_back(":/images/Saabi1/7937c4f5790b27f225974d35c5ce6b5a.jpg");
+        ToutesLesImagesPossibles.push_back(":/images/Saabi1/7d77dbf9c06b7ff73937bac3a3b83c1b.jpg");
         // à découper :
         ToutesLesImagesPossibles.push_back(":/images/Saabi1/10a391a3feec5d37bc4eb39622b02512.jpg");
         ToutesLesImagesPossibles.push_back(":/images/Saabi1/10fccd8c43d42992bc8d93a9eeadd087.jpg");
@@ -286,6 +327,10 @@ void DeterminerImageDepuisCaracs()
         ToutesLesImagesPossibles.push_back(":/images/Saabi1/195f954a0cc64a510432c2c1177e0c30.jpg");
         ToutesLesImagesPossibles.push_back(":/images/Saabi1/28a652d6ba8da5f75b0ec3d02ea39cbb.jpg");
         ToutesLesImagesPossibles.push_back(":/images/Saabi1/3602486f02a326920a57cfb81fb9b51f.jpg");
+        ToutesLesImagesPossibles.push_back(":/images/Saabi1/6ab119db33a32f46cf0cf4f1f99a4d15.jpg");
+        ToutesLesImagesPossibles.push_back(":/images/Saabi1/8360db4df800981718d151e9b5167af2.jpg");
+        ToutesLesImagesPossibles.push_back(":/images/Saabi1/866b2bef506b7a7ff76f1bdb20a53795.jpg");
+        ToutesLesImagesPossibles.push_back(":/images/Saabi1/8be9db52c847046ec1781dccf7bae260.jpg");
     }
 
     QString portrait = ToutesLesImagesPossibles[rand() % ToutesLesImagesPossibles.length()];
