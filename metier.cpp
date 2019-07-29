@@ -21,10 +21,23 @@ Metier::Metier(QString id):m_GroupeMetier(id)
     }
 }
 
+QString Metier::COURTISAN = "Courtisan";
+QString Metier::SOLDAT = "Soldat";
+QString Metier::MERCENAIRE = "Mercenaire";
+QString Metier::NOMADE = "Nomade";
+QString Metier::FORGERON = "Forgeron";
+QString Metier::MUSICIEN = "Musicien";
+QString Metier::CHASSEUR = "Chasseur";
+QString Metier::CAVALIER = "Cavalier";
+QString Metier::MARCHAND = "Marchand";
+QString Metier::ERUDIT = "Érudit";
+QString Metier::DANSEUR = "Danseur";
+QString Metier::ASSASSIN = "Assassin";
+
 QList<QString> Metier::METIERS_GUERRIER = {
     "artilleur",
     "tireur",
-    "cavalier",
+    Metier::CAVALIER,
     "Fantassin lourd",
     "Fantassin léger",
     "Officier"
@@ -32,7 +45,7 @@ QList<QString> Metier::METIERS_GUERRIER = {
 };
 
 QList<QString> Metier::METIERS_ARTISAN = {
-    "forgeron",
+    Metier::FORGERON,
     "alchimiste",
     "Fabricant de bijou",
     "Fabricant de meubles",
@@ -40,43 +53,38 @@ QList<QString> Metier::METIERS_ARTISAN = {
 };
 
 QList<QString> Metier::METIERS_ARTISTE = {
-    "musicien",
+    Metier::MUSICIEN,
     "sculpteur",
     "peintre",
     "comédien",
     "artiste de cirque",
-    "danseur",
+    Metier::DANSEUR,
     "poète" ,
     "chanteur"
 };
 
 QList<QString> Metier::METIERS_MALANDRINS = {
     "Voleur",
-    "Assassin",
+    Metier::ASSASSIN,
     "Espion",
     "bandit",
     "Escroc"
 };
 
-QString Metier::COURTISAN = "Courtisan";
-QString Metier::SOLDAT = "Soldat";
-QString Metier::MERCENAIRE = "Mercenaire";
-QString Metier::NOMADE = "Nomade";
-
 QList<QString> Metier::METIERS = {
-    "Marchand",
+    Metier::MARCHAND,
     "Malandrin",
      Metier::COURTISAN,
     "Aubergiste",
     "Dresseur/palefrenier",
     "Ingénieur/architecte",
-    "Erudit",
+    Metier::ERUDIT,
     "Diplomate",
     "Artisan",
     "cultivateur",
     "bûcheron",
     "mineur",
-    "chasseur",
+    Metier::CHASSEUR,
     "Eleveur",
     "Pêcheur",
     Metier::SOLDAT,
@@ -95,6 +103,11 @@ bool Metier::EstGuerrier(QString metier)
 {
     return ((metier.left(Metier::SOLDAT.length()) == Metier::SOLDAT) ||
             (metier.left(Metier::MERCENAIRE.length()) == Metier::MERCENAIRE));
+}
+
+bool Metier::EstCavalier(QString metier)
+{
+    return (metier.right(Metier::CAVALIER.length()) == Metier::CAVALIER);
 }
 
 Metier Metier::MetierAleatoire()
