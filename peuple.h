@@ -18,6 +18,8 @@ public:
 
     static Peuple AleatoireCapharnaum();
     static Peuple AleatoireSudJazirat();
+
+    static QString ALFARIQN;
 };
 
 #endif // PEUPLE_H

@@ -184,6 +184,41 @@ void DeterminerImageDepuisCaracs()
             }
         }
 
+        if ( peuple == Peuple::ALFARIQN) { // Alfariqn
+            if ( age > 12 ) {
+                if ( age > 20 ) {
+                    if (age < 60 ) {
+                        if ( age < 35 ) {
+                            if ( age < 25 ) {
+                                ToutesLesImagesPossibles.push_back(":/images/Alfariqn/fd3760efaa50fe851bc5c7d5cd405c4a.jpg");
+                            }
+                            ToutesLesImagesPossibles.push_back(":/images/Alfariqn/b932664d9bd81994b263e5825d4d93dc.jpg");
+                        }
+                        ToutesLesImagesPossibles.push_back(":/images/Alfariqn/0cc88d2d98926fbba4a7ed568ffc7c43.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Alfariqn/430a4f0991cd12d5ef3b05abb60d6c7b.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Alfariqn/58ef2fe13375765cb44d54bbcce77507.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Alfariqn/7885484f3d8cb3231d3794138f514e49.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Alfariqn/7937c4f5790b27f225974d35c5ce6b5a.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Alfariqn/c315e241f45ecc8341b276ac0f4da97f.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Alfariqn/ea0ae51882e088331a5e3c333b81b861.jpg");
+                        if ( Metier::EstGuerrier(metier)) {
+                            ToutesLesImagesPossibles.push_back(":/images/Alfariqn/278b24f0f60525ed3aaab30dfc351c21.jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/Alfariqn/97c222051fbb6da3fa447edef2ff6778.jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/Alfariqn/e25a9700b77f11b6cd35b2b36502255c.jpg");
+                        } else if ( metier == Metier::COURTISAN) {
+                            ToutesLesImagesPossibles.push_back(":/images/Alfariqn/2e87c412a04f333a43c2d9e1beb6e75c.jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/Alfariqn/6a9c461a70873fd9bf7140a6dcdfc510.jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/Alfariqn/73606fc49a2870773e97222c4657ec52.jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/Alfariqn/7d77dbf9c06b7ff73937bac3a3b83c1b.jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/Alfariqn/f8324d4bf7612d5c55c3e1fd0a8aca27.jpg");
+                        } else if ( metier == Metier::PRETRE) {
+                            ToutesLesImagesPossibles.push_back(":/images/Alfariqn/6c36ec57f6c9a5541727545d5d100044.jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/Alfariqn/f745f6a28f537bac5ad371d392561b4c.jpg");
+                        }
+                    }
+                }
+            }
+        }
         if ( peuple == Peuple::PEUPLES[0]) { // Saabi
             if ( metier == Metier::NOMADE) {
                 if ( age < 25 ) {
@@ -377,34 +412,20 @@ void DeterminerImageDepuisCaracs()
 
                 }
             }
+        } else if ( peuple == Peuple::ALFARIQN) { // Alfariqn
+            if ( age > 14 ) {
+                if (age < 40 ) {
+                    ToutesLesImagesPossibles.push_back(":/images/Alfariqn/ba95559eddf39af8000e8c85a24554d1.jpg");
+                }
+            }
+
         }
     }
 
-    //ToutesLesImagesPossibles.push_back(":/images/Saabi1/ffe8b0f1b7f5882fc8ff738b18a20dd5.jpg");
+    //ToutesLesImagesPossibles.push_back(":/images/Alfariqn/fd3760efaa50fe851bc5c7d5cd405c4a.jpg");
 
     if ( false) {
-        // gardé pour plus tard :(noirs...)
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/07b7f04a04e8932b9d4a2c98a25b42f8.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/0cc88d2d98926fbba4a7ed568ffc7c43.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/278b24f0f60525ed3aaab30dfc351c21.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/2e87c412a04f333a43c2d9e1beb6e75c.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/430a4f0991cd12d5ef3b05abb60d6c7b.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/58ef2fe13375765cb44d54bbcce77507.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/6a9c461a70873fd9bf7140a6dcdfc510.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/6c36ec57f6c9a5541727545d5d100044.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/73606fc49a2870773e97222c4657ec52.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/7885484f3d8cb3231d3794138f514e49.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/7937c4f5790b27f225974d35c5ce6b5a.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/7d77dbf9c06b7ff73937bac3a3b83c1b.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/97c222051fbb6da3fa447edef2ff6778.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/b932664d9bd81994b263e5825d4d93dc.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/ba95559eddf39af8000e8c85a24554d1.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/c315e241f45ecc8341b276ac0f4da97f.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/e25a9700b77f11b6cd35b2b36502255c.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/ea0ae51882e088331a5e3c333b81b861.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/f745f6a28f537bac5ad371d392561b4c.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/f8324d4bf7612d5c55c3e1fd0a8aca27.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/fd3760efaa50fe851bc5c7d5cd405c4a.jpg");
+        // gardé pour plus tard
         // à découper :
         ToutesLesImagesPossibles.push_back(":/images/Saabi1/10a391a3feec5d37bc4eb39622b02512.jpg");
         ToutesLesImagesPossibles.push_back(":/images/Saabi1/10fccd8c43d42992bc8d93a9eeadd087.jpg");

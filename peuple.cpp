@@ -5,11 +5,14 @@ Peuple::Peuple(QString id):m_Peuple(id)
 
 }
 
+QString Peuple::ALFARIQN = "Alfariqn";
+
 QList<QString> Peuple::PEUPLES = {
     "Saabi",
     "Shiradim",
     "Escarte",
-    "Agalanthéen"
+    "Agalanthéen",
+    Peuple::ALFARIQN
 };
 
 Peuple Peuple::AleatoireCapharnaum()
@@ -22,8 +25,11 @@ Peuple Peuple::AleatoireCapharnaum()
         id = Peuple::PEUPLES[1];
     else if ( val < 90 )
         id = Peuple::PEUPLES[3];
-    else
+    else if (val < 99)
         id = Peuple::PEUPLES[2];
+    else {
+        id = Peuple::ALFARIQN;
+    }
 
     return Peuple(id);
 }
@@ -38,8 +44,10 @@ Peuple Peuple::AleatoireSudJazirat()
         id = Peuple::PEUPLES[1];
     else if ( val < 95 )
         id = Peuple::PEUPLES[3];
-    else
+    else if (val < 99)
         id = Peuple::PEUPLES[2];
+    else {
+        id = Peuple::ALFARIQN;
 
     return Peuple(id);
 }
