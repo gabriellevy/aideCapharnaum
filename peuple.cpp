@@ -46,7 +46,7 @@ Peuple Peuple::AleatoireSudJazirat()
         id = Peuple::PEUPLES[3];
     else if (val < 99)
         id = Peuple::PEUPLES[2];
-    else {
+    else
         id = Peuple::ALFARIQN;
 
     return Peuple(id);

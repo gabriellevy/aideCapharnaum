@@ -424,33 +424,6 @@ void DeterminerImageDepuisCaracs()
 
     //ToutesLesImagesPossibles.push_back(":/images/Alfariqn/fd3760efaa50fe851bc5c7d5cd405c4a.jpg");
 
-    if ( false) {
-        // gardé pour plus tard
-        // à découper :
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/10a391a3feec5d37bc4eb39622b02512.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/10fccd8c43d42992bc8d93a9eeadd087.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/134f7fc65de72adf463a7af4548fa7eb.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/195f954a0cc64a510432c2c1177e0c30.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/28a652d6ba8da5f75b0ec3d02ea39cbb.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/3602486f02a326920a57cfb81fb9b51f.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/6ab119db33a32f46cf0cf4f1f99a4d15.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/8360db4df800981718d151e9b5167af2.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/866b2bef506b7a7ff76f1bdb20a53795.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/8be9db52c847046ec1781dccf7bae260.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/94a9edddd34edcecdeac33611702a21f.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/a998bb83a831301588a77e62cd95d022.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/aac88c70480ca0a50f83c02ef01ebea5.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/b13270e47bdacd407905b320faeb5105.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/ba77241a2766ee4980fd604e549261b3.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/c20dffeb26a423583bf8aed3358a991b.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/db92117d9c23e353768b18616d84a25e.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/e38a8a9a5678cbefde2a8195ef794a56.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/f87e681acca1afe7fb42c77c17d84b04.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/faed1f2cf308518875fcf020697833b3.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/fb427748876194449c11d3f61f2b654a.jpg");
-        ToutesLesImagesPossibles.push_back(":/images/Saabi1/ffe8b0f1b7f5882fc8ff738b18a20dd5.jpg");
-    }
-
     QString portrait = ToutesLesImagesPossibles[rand() % ToutesLesImagesPossibles.length()];
 
     Univers::ME->GetExecHistoire()->GetExecEffetActuel(false)->ChargerImage(portrait);
