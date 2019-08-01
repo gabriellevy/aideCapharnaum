@@ -36,6 +36,7 @@ public:
     static QString DANSEUR;
     static QString ASSASSIN;
     static QString PRETRE;
+    static QString CIRQUE;
 };
 
 #endif // METIER_H

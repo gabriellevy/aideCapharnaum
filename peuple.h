@@ -20,6 +20,10 @@ public:
     static Peuple AleatoireSudJazirat();
 
     static QString ALFARIQN;
+    static QString SAABI;
+    static QString AGALANTHEEN;
+    static QString SHIRADIM;
+    static QString ESCARTE;
 };
 
 #endif // PEUPLE_H
