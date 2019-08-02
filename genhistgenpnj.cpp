@@ -7,6 +7,8 @@
 #include "peuple.h"
 #include "sexe.h"
 #include "age.h"
+#include "../destinLib/perso.h"
+#include "../destinLib/gestionnairecarac.h"
 #include "../destinLib/execeffet.h"
 
 GenHistGenPnj::GenHistGenPnj(Hist* histoireGeneree):GenHistoire (histoireGeneree)
@@ -172,7 +174,7 @@ void DeterminerImageDepuisCaracs()
     QList<QString> ToutesLesImagesPossibles = {};
 
     qDebug()<<"sexe : "<<sexe<<endl;
-    if ( sexe == Sexe::SEXES[0])/* hommes*/ {
+    if ( sexe == Sexe::MALE)/* hommes*/ {
         // homme
         // tous les peuples
         if ( age > 20 ) {
@@ -373,7 +375,7 @@ void DeterminerImageDepuisCaracs()
             }
         }
 
-    } else if (sexe == Sexe::SEXES[1])/* femmes*/ {
+    } else if (sexe == Sexe::FEMELLE)/* femmes*/ {
         // femmes
         if ( peuple == Peuple::SAABI || peuple == Peuple::SHIRADIM || peuple == Peuple::AGALANTHEEN) {
             if ( age > 15) {
@@ -492,12 +494,18 @@ void DeterminerImageDepuisCaracs()
         }
     }
 
-    ToutesLesImagesPossibles.push_back(":/images/Divers/ffe8b0f1b7f5882fc8ff738b18a20dd5.jpg");
+    //ToutesLesImagesPossibles.push_back(":/images/Divers/ffe8b0f1b7f5882fc8ff738b18a20dd5.jpg");
 
     QString portrait = ToutesLesImagesPossibles[rand() % ToutesLesImagesPossibles.length()];
 
     Univers::ME->GetExecHistoire()->GetExecEffetActuel(false)->ChargerImage(portrait);
-    Univers::ME->GetExecHistoire()->GetExecEffetActuel(false)->GetEffet()->m_Text += " " + portrait;
+
+    QString nom = Peuple::GenererNom(peuple, sexe);
+    IPerso::GetPersoInterface()->GetPersoCourant()->MajNom(nom);
+    IPerso::GetPersoInterface()->RafraichirAffichage();
+
+    Univers::ME->GetExecHistoire()->GetExecEffetActuel(false)->GetEffet()->m_Text += " " + portrait + "\n" + nom;
+
 }
 
 void GenHistGenPnj::GenererEvtsAccueil()

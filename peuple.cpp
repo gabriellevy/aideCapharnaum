@@ -1,4 +1,6 @@
 #include "peuple.h"
+#include <QTime>
+#include "sexe.h"
 
 Peuple::Peuple(QString id):m_Peuple(id)
 {
@@ -18,6 +20,30 @@ QList<QString> Peuple::PEUPLES = {
     Peuple::AGALANTHEEN,
     Peuple::ALFARIQN
 };
+
+
+QString Peuple::GenererNom(QString peuple, QString sexe)
+{
+    if ( peuple == Peuple::SAABI) {
+        return ( (sexe == Sexe::MALE) ?
+                 Peuple::PRENOMS_SAABI_MALES[rand() % Peuple::PRENOMS_SAABI_MALES.length()] :
+                 Peuple::PRENOMS_SAABI_FEMELLES[rand() % Peuple::PRENOMS_SAABI_FEMELLES.length()] )
+                + " " +
+                Peuple::NOMS_SAABI[rand() % Peuple::NOMS_SAABI.length()];
+    }
+
+    return "pas de nom";
+}
+
+QVector<QString> Peuple::NOMS_SAABI = {"Aabdi", "Abdi"};
+
+QVector<QString> Peuple::PRENOMS_SAABI_MALES = {
+    "Aarab", "Abbas", "Abbes", "Abd Al-Ali", "Abd Al-Hafid", "Abd Al-Hakim", "Abd Al-Halim",
+    "Abd Al-Hamid", "Abd Al-Haqq", "Abd Allâh ", "Abd Ash-Shahid", "Abd Ash-Shakour ", "Abd Al-Kader", "Abd Al-Karim",
+    "Abd Ul-Latif", "Abd Al-Mouqit ", "Abdel", "Abdelmajid", "Abdelmoudjib", "Abdelmouneim", "Abd Al-Wahab",
+    "Abd Al-Wahid", "Abd An-Nour", "Azmar", "Bassel", "Khmaies", "Youssef", "Abd Al-Wahab",
+};
+QVector<QString> Peuple::PRENOMS_SAABI_FEMELLES = {"Atiqua"};
 
 Peuple Peuple::AleatoireCapharnaum()
 {

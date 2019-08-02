@@ -24,6 +24,11 @@ public:
     static QString AGALANTHEEN;
     static QString SHIRADIM;
     static QString ESCARTE;
+
+    static QString GenererNom(QString peuple, QString sexe);
+    static QVector<QString> NOMS_SAABI;
+    static QVector<QString> PRENOMS_SAABI_MALES;
+    static QVector<QString> PRENOMS_SAABI_FEMELLES;
 };
 
 #endif // PEUPLE_H

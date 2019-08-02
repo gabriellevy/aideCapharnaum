@@ -15,6 +15,8 @@ public:
     static QList<QString> SEXES;
 
     static Sexe Aleatoire();
+    static QString MALE;
+    static QString FEMELLE;
 };
 
 #endif // SEXE_H
