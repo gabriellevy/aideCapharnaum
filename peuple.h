@@ -11,6 +11,7 @@ public:
     Peuple(QString id);
 
     QString m_Peuple;
+    QString m_SousGroupe = "";
     QString m_LieuOrigine;
 
     static QList<QString> PEUPLES;
@@ -29,6 +30,10 @@ public:
     static QVector<QString> NOMS_SAABI;
     static QVector<QString> PRENOMS_SAABI_MALES;
     static QVector<QString> PRENOMS_SAABI_FEMELLES;
+
+    static QVector<QString> NOMS_OCCIDENTIN;
+    static QVector<QString> PRENOMS_OCCIDENTIN_MALES;
+    static QVector<QString> PRENOMS_OCCIDENTIN_FEMELLES;
 };
 
 #endif // PEUPLE_H
