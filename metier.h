@@ -30,6 +30,7 @@ public:
     static QString FORGERON;
     static QString MUSICIEN;
     static QString CHASSEUR;
+    static QString ELEVEUR;
     static QString CAVALIER;
     static QString MARCHAND;
     static QString ERUDIT;
@@ -37,6 +38,11 @@ public:
     static QString ASSASSIN;
     static QString PRETRE;
     static QString CIRQUE;
+    static QString CHARPENTIER;
+    static QString FABRICANT_MEUBLES;
+    static QString PAYSAN;
+    static QString ARCHER;
+    static QString VAGABOND;
 };
 
 #endif // METIER_H

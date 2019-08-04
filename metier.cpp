@@ -35,10 +35,16 @@ QString Metier::DANSEUR = "Danseur";
 QString Metier::ASSASSIN = "Assassin";
 QString Metier::PRETRE = "Pretre";
 QString Metier::CIRQUE = "Artiste de cirque";
+QString Metier::ELEVEUR = "Éleveur";
+QString Metier::CHARPENTIER = "Charpentier";
+QString Metier::FABRICANT_MEUBLES = "Fabricant de meubles";
+QString Metier::PAYSAN = "Paysan";
+QString Metier::ARCHER = "Archer";
+QString Metier::VAGABOND = "Vagabond";
 
 QList<QString> Metier::METIERS_GUERRIER = {
     "artilleur",
-    "tireur",
+    Metier::ARCHER,
     Metier::CAVALIER,
     "Fantassin lourd",
     "Fantassin léger",
@@ -47,9 +53,10 @@ QList<QString> Metier::METIERS_GUERRIER = {
 
 QList<QString> Metier::METIERS_ARTISAN = {
     Metier::FORGERON,
+    Metier::CHARPENTIER,
     "alchimiste",
     "Fabricant de bijou",
-    "Fabricant de meubles",
+    Metier::FABRICANT_MEUBLES,
     "Herboriste"
 };
 
@@ -82,18 +89,18 @@ QList<QString> Metier::METIERS = {
     Metier::ERUDIT,
     "Diplomate",
     "Artisan",
-    "cultivateur",
+    Metier::PAYSAN,
     "bûcheron",
     "mineur",
     Metier::CHASSEUR,
-    "Eleveur",
+    Metier::ELEVEUR,
     "Pêcheur",
     Metier::SOLDAT,
     Metier::MERCENAIRE,
     "Banquier/prêteur",
     "Guérisseur/médecin",
     Metier::PRETRE,
-    "Vagabond",
+    Metier::VAGABOND,
     Metier::NOMADE,
     "Artiste",
     "Précepteur",

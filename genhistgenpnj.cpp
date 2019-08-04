@@ -128,15 +128,6 @@ Effet* GenHistGenPnj::GenererEffetSelectionAge()
 
     }
 
-    // mène direct à la fin de la génération en aléatoire complet :
-    Age AgeAl2(Age::AgeAleatoire());
-    Choix* choixAleatoireComplet = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
-                "ALEATOIRE COMPLET", UniversCapharnaum::CARAC_AGE, QString::number(AgeAl2.m_Age));
-    //sexe aléatoire aussi :
-    Sexe SexeAl2(Sexe::Aleatoire());
-    choixAleatoireComplet->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_SEXE, SexeAl2.m_Sexe);
-    choixAleatoireComplet->m_GoToEffetId = "FinGeneration";
-
     return effet;
 }
 
@@ -159,6 +150,9 @@ Effet* GenHistGenPnj::GenererEffetSelectionSexe()
     Sexe SexeAl2(Sexe::Aleatoire());
     Choix* choixAleatoireComplet = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
                  "ALEATOIRE COMPLET", UniversCapharnaum::CARAC_SEXE, SexeAl2.m_Sexe);
+    // Age aléatoire aussi
+    Age AgeAl2(Age::AgeAleatoire());
+    choixAleatoireComplet->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_AGE, QString::number(AgeAl2.m_Age));
     choixAleatoireComplet->m_GoToEffetId = "FinGeneration";
 
     return effet;
@@ -185,10 +179,6 @@ void DeterminerImageDepuisCaracs()
                 }
             } else /* vieux...*/ {
                 ToutesLesImagesPossibles.push_back(":/images/Divers/866b2bef506b7a7ff76f1bdb20a53795.jpg");
-            }
-        } else {
-            if ( age < 35 ) {
-                ToutesLesImagesPossibles.push_back(":/images/Divers/195f954a0cc64a510432c2c1177e0c30.jpg");
             }
         }
 
@@ -267,11 +257,13 @@ void DeterminerImageDepuisCaracs()
                     ToutesLesImagesPossibles.push_back(":/images/Saabi1/c579641fd341d7ea737417a32676ad59.jpg");
                 } else if ( metier == Metier::CIRQUE) {
                     ToutesLesImagesPossibles.push_back(":/images/Divers/e38a8a9a5678cbefde2a8195ef794a56.jpg");
+                } else if  (metier == Metier::MUSICIEN) {
+                   if ( age < 35 ) {
+                       ToutesLesImagesPossibles.push_back(":/images/Divers/195f954a0cc64a510432c2c1177e0c30.jpg");
+                   }
                 }
             }
-        }
-
-        if ( peuple == Peuple::PEUPLES[1]) // Shiradim
+        } else if ( peuple == Peuple::PEUPLES[1]) // Shiradim
         {
             if (age > 55 ) {
                 ToutesLesImagesPossibles.push_back(":/images/Saabi1/6fe2457a0e47202be57fcfd3f72f554f.jpg");
@@ -279,6 +271,81 @@ void DeterminerImageDepuisCaracs()
                 ToutesLesImagesPossibles.push_back(":/images/Saabi1/e394514a46b707d4e2d5e4c260376f2c.jpg");
                 ToutesLesImagesPossibles.push_back(":/images/Saabi1/f14e9cf58e49ca0c48b83e1ce1ba30f1.jpg");
             }
+        }
+        else if ( peuple == Peuple::ESCARTE) {
+            if ( age > 16 ) {
+                ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/41eef8f85eac97410afbb84f88f7b0bb - Copie (2).jpg");
+                if ( Metier::EstGuerrier(metier)) {
+                    ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/60f8753d3515c1c754234dad2f22cba3.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/5c1996335ae1f4cfa44f2221d720ede1.jpg");
+                } else if ( metier==Metier::PRETRE) {
+                    ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/e0cb2a041352a651cbddd74fdf2f4d3c.jpg");
+                }
+                if ( age > 40 ) {
+                    if ( age < 70 ){
+                        if ( metier == Metier::COURTISAN) {
+                            ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/14267318e4e80365aaa26b87b4c25556 - Copie.jpg");
+                        } else if (metier == Metier::FABRICANT_MEUBLES) {
+                            ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/418442e79a6d0e30f5e9a101872a8d00.jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/96f788ed6fe5242fee0e75eb25c8166c - Copie (2).jpg");
+                        }
+                    }
+                }
+                if ( age < 55 ) {
+                    ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/b9479421c253fcd2a6efa89757544c4c.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/41eef8f85eac97410afbb84f88f7b0bb.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/08ecb51c8918f52f84b1624a9ddec153 - Copie (2).jpg");
+                    if ( metier == Metier::ELEVEUR) {
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/0a5c568123d015944577095c208ea488.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/c538ae6e93af95a55171a841e50d523c.jpg");
+                    } else if (metier == Metier::COURTISAN) {
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/14267318e4e80365aaa26b87b4c25556 - Copie (3).jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/14267318e4e80365aaa26b87b4c25556 - Copie (4).jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/14267318e4e80365aaa26b87b4c25556 - Copie (6).jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/2b5eb752aff68f234bf57174ca2c6f26 - Copie (2).jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/41eef8f85eac97410afbb84f88f7b0bb - Copie (7).jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/b9479421c253fcd2a6efa89757544c4c - Copie.jpg");
+                        if ( age < 28 ) {
+                           ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/b9479421c253fcd2a6efa89757544c4c - Copie (2).jpg");
+                        }
+                    }else if ( Metier::EstGuerrier(metier)) {
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/41eef8f85eac97410afbb84f88f7b0bb - Copie (3).jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/a5331a57f10d463b9970300bbf9055de.jpg");
+                    } else if ( metier == Metier::MARCHAND) {
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/63e58cd14243d61124a8346983961dff - Copie.jpg");
+                    } else if ( metier == Metier::PAYSAN) {
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/c7e3f465fc0a6ca618d411de7b6d5c01.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/604494d00fbfd5a6d934ff172dfbed0f - Copie.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/73d9631af3ab0510ab7aa65f0cc63e6e.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/814461c8838652d4ad2b97d9c41b9d04 - Copie.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/ac73ecd5d938967abfeb46d445ce5d04.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/bcf99925e53f1978f6d0dc72de69ad29.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/f8ddedb012827779365f9e942e059039.jpg");
+                    } else if ( metier == Metier::ARCHER) {
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/80bf863b6dd27d866a08153d905253c5.jpg");
+                    } else if ( metier == Metier::CHARPENTIER) {
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/a41992ad1a5ca99f4292870ac416b6ee.jpg");
+                    } else if ( metier == Metier::MUSICIEN) {
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/e0cb2a041352a651cbddd74fdf2f4d3c - Copie.jpg");
+                    } else if ( metier==Metier::CHASSEUR) {
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/f8026f778b43f5e49638590098f4fffd - Copie.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/f8026f778b43f5e49638590098f4fffd.jpg");
+                    } else if ( metier==Metier::VAGABOND) {
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/fec1f50b944e7e45c0a0cd66681807d5.jpg");
+                    }
+
+                }
+            } else {
+                if ( age < 15) { /* enfants escartes*/
+                    ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/08ecb51c8918f52f84b1624a9ddec153.jpg");
+                    if (metier == Metier::COURTISAN) {
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/2b5eb752aff68f234bf57174ca2c6f26 - Copie (3).jpg");
+                    } else if ( metier == Metier::FABRICANT_MEUBLES) {
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/96f788ed6fe5242fee0e75eb25c8166c.jpg");
+                    }
+                }
+            }
+
         }
 
         if ( peuple == Peuple::PEUPLES[0] || peuple == Peuple::PEUPLES[1]) // Saabi ou Shiradim
@@ -412,7 +479,7 @@ void DeterminerImageDepuisCaracs()
                 ToutesLesImagesPossibles.push_back(":/images/Saabi1/67efe71502e501bb60c3da6cc29559e9.jpg");
             }
         }
-        if ( peuple == Peuple::PEUPLES[0] || peuple == Peuple::PEUPLES[1]) // Saabi ou Shiradim
+        if ( peuple == Peuple::SAABI || peuple == Peuple::SHIRADIM) // Saabi ou Shiradim
         {
             if ( metier == Metier::MUSICIEN) {
                 if ( age < 50 ) {
@@ -456,7 +523,7 @@ void DeterminerImageDepuisCaracs()
                 }
             }
         }
-        if ( peuple == Peuple::PEUPLES[3]) // Agalanthéenne
+        if ( peuple == Peuple::AGALANTHEEN) // Agalanthéenne
         {
             if ( age > 15) {
                 if ( age < 40 ) {
@@ -491,10 +558,46 @@ void DeterminerImageDepuisCaracs()
                 ToutesLesImagesPossibles.push_back(":/images/Divers/f87e681acca1afe7fb42c77c17d84b04 - Copie.jpg");
                 }
             }
+        }else if ( peuple == Peuple::ESCARTE) {
+            if ( age > 16) {
+                if ( age > 40 ) {
+                    ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/41eef8f85eac97410afbb84f88f7b0bb - Copie (4).jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/14267318e4e80365aaa26b87b4c25556.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/41eef8f85eac97410afbb84f88f7b0bb - Copie (5).jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/41eef8f85eac97410afbb84f88f7b0bb - Copie (6).jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/41eef8f85eac97410afbb84f88f7b0bb - Copie.jpg");
+                    if ( age > 60 ) /* vieilles escartes */ {
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/14267318e4e80365aaa26b87b4c25556.jpg");
+                    }
+                }
+                if ( age < 60 ) {
+                    if ( metier == Metier::PAYSAN) {
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/604494d00fbfd5a6d934ff172dfbed0f.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/73d9631af3ab0510ab7aa65f0cc63e6e - Copie.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/814461c8838652d4ad2b97d9c41b9d04.jpg");
+                    } else if ( metier==Metier::FABRICANT_MEUBLES) {
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/96f788ed6fe5242fee0e75eb25c8166c - Copie.jpg");
+                    }
+                    if ( age < 50) {
+                        if ( age < 30 ) {
+                            ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/ed26955f4f3c615a49fcd6b4dd916d9e.jpg");
+                        }
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/08ecb51c8918f52f84b1624a9ddec153 - Copie.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/14267318e4e80365aaa26b87b4c25556 - Copie (2).jpg");
+                        if ( metier == Metier::COURTISAN) {
+                            ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/2b5eb752aff68f234bf57174ca2c6f26 - Copie (4).jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/14267318e4e80365aaa26b87b4c25556 - Copie (5).jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/14267318e4e80365aaa26b87b4c25556 - Copie (7).jpg");
+                        } else if ( metier == Metier::MARCHAND) {
+                            ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/63e58cd14243d61124a8346983961dff.jpg");
+                        }
+                   }
+                }
+            }
         }
     }
 
-    //ToutesLesImagesPossibles.push_back(":/images/Divers/ffe8b0f1b7f5882fc8ff738b18a20dd5.jpg");
+    ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/63e58cd14243d61124a8346983961dff.jpg");
 
     QString portrait = ToutesLesImagesPossibles[rand() % ToutesLesImagesPossibles.length()];
 
@@ -514,6 +617,7 @@ void GenHistGenPnj::GenererEvtsAccueil()
     GenererEffetSelectionMetier();
     GenererEffetSelectionPeuple();
     GenererEffetSelectionSexe();
+    GenererEffetSelectionAge();
 
     m_GenerateurEvt->AjouterEffetCallbackDisplay(
                 DeterminerImageDepuisCaracs,

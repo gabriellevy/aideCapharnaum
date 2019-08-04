@@ -2,10 +2,7 @@
 #include <QTime>
 #include "sexe.h"
 
-Peuple::Peuple(QString id):m_Peuple(id)
-{
-
-}
+Peuple::Peuple(QString id):m_Peuple(id) {}
 
 QString Peuple::ALFARIQN = "Alfariqn";
 QString Peuple::SAABI = "Saabi";
@@ -52,7 +49,9 @@ QVector<QString> Peuple::NOMS_OCCIDENTIN = {
     "de Sautemouton", "de Sauveterre", "de Sombretour", "de Sombreval", "de Songecreux", "de Valvert",
     "le Bel", "le Bon", "le Brave", "le Fier", "le Franc", "le Hardi", "le Jeune", "le Matois", "le Preux", "le Sagace",
     "le Sage", "le Taciturne", "Barberousse", "Brisefer", "Coeur-de-Lion", "Dent-de-Loup", "Sang-de-Boeuf", "Taillefer",
-    "Tuemouches"
+    "Tuemouches", "Langlois", "Duchesne", "Marchand", "Boulanger", "le Chauve", "Courtois", "Ageorges", "Aubernard", "Alamartine",
+    "Fromentin", "Rabier", "Coulomb", "Cabrera", "Poudevigne", "Messonnier", "Métivier", "Pelletier", "Larsonneur",
+    "Castagnier", "Nouet", "Lebreton", "Manceau", "Legros", "Lenain", "Sarrazin", "Chauvin", "Roux",
 };
 QVector<QString> Peuple::PRENOMS_OCCIDENTIN_MALES = {
     "ALPHONSE", "AMEDEE", "AMINA", "ARNAUD", "ARTHUR", "AUDOIN", "BAUDOIN",
