@@ -1,5 +1,6 @@
 #include "metier.h"
-#include <QTime>
+#include <chrono>
+#include <random>
 
 Metier::Metier(QString id):m_GroupeMetier(id)
 {
@@ -120,5 +121,10 @@ bool Metier::EstCavalier(QString metier)
 
 Metier Metier::MetierAleatoire()
 {
-    return Metier(METIERS[rand() % METIERS.length()]);
+    // construct a trivial random generator engine from a time-based seed:
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
+    std::uniform_int_distribution<int> distribution(0,METIERS.length());
+
+    return Metier(METIERS[distribution(generator)]);
 }

@@ -31,6 +31,11 @@ public:
     static QVector<QString> PRENOMS_SAABI_MALES;
     static QVector<QString> PRENOMS_SAABI_FEMELLES;
 
+    static QVector<QString> NOMS_SHIRADIM;
+    static QVector<QString> PRENOMS_SHIRADIM_MALES;
+
+    static QVector<QString> NOMS_ARAGON;
+    static QVector<QString> NOMS_DORKADE;
     static QVector<QString> NOMS_OCCIDENTIN;
     static QVector<QString> PRENOMS_OCCIDENTIN_MALES;
     static QVector<QString> PRENOMS_OCCIDENTIN_FEMELLES;

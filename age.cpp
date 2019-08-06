@@ -1,7 +1,10 @@
 #include "age.h"
+#include <QTime>
 
 Age::Age(QString id):m_Tranche(id)
 {
+    QTime time = QTime::currentTime();
+    qsrand(static_cast<uint>(time.msec()));
     if ( m_Tranche == TRANCHES[0]) {
         m_Age = 5 + rand()%11;
     }else if ( m_Tranche == TRANCHES[1]) {

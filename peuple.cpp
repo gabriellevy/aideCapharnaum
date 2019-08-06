@@ -1,5 +1,6 @@
 #include "peuple.h"
-#include <QTime>
+#include <chrono>
+#include <random>
 #include "sexe.h"
 
 Peuple::Peuple(QString id):m_Peuple(id) {}
@@ -38,6 +39,23 @@ QString Peuple::GenererNom(QString peuple, QString sexe)
     return "pas de nom";
 }
 
+QVector<QString> Peuple::PRENOMS_SHIRADIM_MALES = {
+    "Abel", "Abraham"
+};
+
+QVector<QString> Peuple::NOMS_SHIRADIM = {
+    "Aaron", "Abecassis", "Abehassera", "Abehcera", "Abehsera", "Abehserra", "Abehsira", "Abehssera", "Abihsera",
+    "Abihsira", "Abihssera", "Abihssira", "Abissera", "Boussera", "Abitbol", "Abitboul"
+};
+
+QVector<QString> Peuple::NOMS_DORKADE = {
+    "Aalberg", "Absalon", "Acker"
+};
+
+QVector<QString> Peuple::NOMS_ARAGON = {
+    "Acosta", "Acuña", "Adalbéron"
+};
+
 QVector<QString> Peuple::NOMS_OCCIDENTIN = {
     "d'Aiglemont", "d'Aiguemorte", "d'Aiguevive", "d'Aspremont", "de Beaulieu", "de Beaupré", "de Belleforest",
     "de Bellegarde", "de Bénévent", "de Blancmoustier", "de Boisjoli", "de Boutefeu", "de Clairefontaine",
@@ -52,6 +70,9 @@ QVector<QString> Peuple::NOMS_OCCIDENTIN = {
     "Tuemouches", "Langlois", "Duchesne", "Marchand", "Boulanger", "le Chauve", "Courtois", "Ageorges", "Aubernard", "Alamartine",
     "Fromentin", "Rabier", "Coulomb", "Cabrera", "Poudevigne", "Messonnier", "Métivier", "Pelletier", "Larsonneur",
     "Castagnier", "Nouet", "Lebreton", "Manceau", "Legros", "Lenain", "Sarrazin", "Chauvin", "Roux",
+    "Abarnou", "Abattu", "Abbadie", "Abéjean", "Abellan", "Abeloos", "Abijou", "Abillard", "Abisseror", "Abrassart",
+    "Abravanel", "Abrazard", "Abribat", "Abric", "Abrigeon", "Abriol", "Absalon", "Acharles", "Acheriteguy", "Achotte",
+    "Achouline", "Adélaïde", "Adelmard"
 };
 QVector<QString> Peuple::PRENOMS_OCCIDENTIN_MALES = {
     "ALPHONSE", "AMEDEE", "AMINA", "ARNAUD", "ARTHUR", "AUDOIN", "BAUDOIN",
@@ -86,7 +107,7 @@ QVector<QString> Peuple::PRENOMS_OCCIDENTIN_MALES = {
     "Garin", "Garnier", "Gauthier", "Gauvain", "Gibouin", "Gilemer", "Girart", "Godefroy", "Gontran",
     "Gonzagues", "Grégoire", "Guerri", "Guilhem", "Hardouin", "Herbert", "Herchambaut", "Hubert", "Hugues",
     "Huon", "Jehan", "Lancelot", "Merlin", "Perceval", "Philibert", "Raoul", "Raymond", "Renaud", "Robert",
-    "Roland", "Savari", "Sigismond", "Tancrède", "Thibaut", "Tristan", "Urbain", "Ybert", "Yvain"
+    "Roland", "Savari", "Sigismond", "Tancrède", "Thibaut", "Tristan", "Urbain", "Ybert", "Yvain", "Abélard"
 };
 QVector<QString> Peuple::PRENOMS_OCCIDENTIN_FEMELLES = {
     "ADELAIDE", "AGNES", "ALIENOR", "ANASTASE", "ANASTASIE", "ASTRID", "AUDE", "AURE",
@@ -117,19 +138,35 @@ QVector<QString> Peuple::PRENOMS_OCCIDENTIN_FEMELLES = {
     "Iseult", "Léonor", "Letgarde", "Mahaut", "Mélissande", "Mélusine", "Milesende", "Morgane", "Ursule", "Viviane"
 };
 
-QVector<QString> Peuple::NOMS_SAABI = {"Aabdi", "Abdi"};
+QVector<QString> Peuple::NOMS_SAABI = {
+    "Aabdi", "Abdi", "Abad", "Abalhajj", "Abbou", "Abboud", "Abouab", "Aboulker", "Achiq", "Achour", "Adil"
+};
 
 QVector<QString> Peuple::PRENOMS_SAABI_MALES = {
     "Aarab", "Abbas", "Abbes", "Abd Al-Ali", "Abd Al-Hafid", "Abd Al-Hakim", "Abd Al-Halim",
     "Abd Al-Hamid", "Abd Al-Haqq", "Abd Allâh ", "Abd Ash-Shahid", "Abd Ash-Shakour ", "Abd Al-Kader", "Abd Al-Karim",
     "Abd Ul-Latif", "Abd Al-Mouqit ", "Abdel", "Abdelmajid", "Abdelmoudjib", "Abdelmouneim", "Abd Al-Wahab",
-    "Abd Al-Wahid", "Abd An-Nour", "Azmar", "Bassel", "Khmaies", "Youssef", "Abd Al-Wahab", "Ali"
+    "Abd Al-Wahid", "Abd An-Nour", "Azmar", "Bassel", "Khmaies", "Youssef", "Abd Al-Wahab", "Ali",
+    "Abd Ar-Rahman", "Abd Ar-Razak", "Abd As-Samad", "Abd As-Slam", "Abd El-Jabar", "Abd El-Matine", "Abd El-Samii",
+    "Abderrafi", "Abdessalam", "Abid", "Abidi", "Abû Bakr", "Achraf", "Adam", "Adib", "Adil", "Adnâan", "Afif", "Afzal",
+    "Ahid", "Ahmed", "Aïssa", "Akram", "Altair", "Ali", "Amar", "Amine", "Amir", "Aniq", "Anisse", "Anwar", "Arbi", "Ari",
+    "Arif", "Asmar", "Awab", "Ayham", "Aymane", "Ayoub", "Aziz",
+    "Azz Ad-Din"
 };
-QVector<QString> Peuple::PRENOMS_SAABI_FEMELLES = {"Atiqua"};
+QVector<QString> Peuple::PRENOMS_SAABI_FEMELLES = {
+    "Atiqua", "Abir", "Abla", "Afaf", "Ahida", "Ahlam", "Aïcha", "Alia", "Alma", "Alya", "Amal", "Amina",
+    "Amira", "Amna", "Aniqa", "Anissa", "Awatif", "Arbia", "Arifa", "Arij", "Asma", "Asmahane", "Assia",
+    "Atiqua", "Aya", "Aziza", "Azza"
+};
 
 Peuple Peuple::AleatoireCapharnaum()
 {
-    int val = rand() % 100;
+    // construct a trivial random generator engine from a time-based seed:
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
+    std::uniform_int_distribution<int> distribution(0, 100);
+
+    int val = distribution(generator);
     QString id = "";
     if ( val < 35 )
         id = Peuple::SAABI;
@@ -148,7 +185,12 @@ Peuple Peuple::AleatoireCapharnaum()
 
 Peuple Peuple::AleatoireSudJazirat()
 {
-    int val = rand() % 100;
+    // construct a trivial random generator engine from a time-based seed:
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
+    std::uniform_int_distribution<int> distribution(0, 100);
+
+    int val = distribution(generator);
     QString id = "";
     if ( val < 65 )
         id = Peuple::SAABI;

@@ -8,15 +8,18 @@
 class Sexe
 {
 public:
-    Sexe(QString id);
+    Sexe();
 
     QString m_Sexe;
 
     static QList<QString> SEXES;
 
-    static Sexe Aleatoire();
     static QString MALE;
     static QString FEMELLE;
+
+    // random system :
+    //std::default_random_engine generator;
+    //std::uniform_int_distribution<int> distribution;
 };
 
 #endif // SEXE_H
