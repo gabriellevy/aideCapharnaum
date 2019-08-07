@@ -17,6 +17,7 @@ public:
     static QString CARAC_METIER;
     static QString CARAC_SEXE;
     static QString CARAC_PEUPLE;
+    static QString CARAC_SOUS_GROUPE;
     static QString CARAC_AGE;
 
 private:

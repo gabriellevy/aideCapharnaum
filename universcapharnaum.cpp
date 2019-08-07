@@ -16,6 +16,7 @@ UniversCapharnaum::UniversCapharnaum(ModeAffichage modeAffichage,
 QString UniversCapharnaum::CARAC_METIER = "Métier";
 QString UniversCapharnaum::CARAC_SEXE = "Sexe";
 QString UniversCapharnaum::CARAC_PEUPLE = "Peuple";
+QString UniversCapharnaum::CARAC_SOUS_GROUPE = "SousGroupe";
 QString UniversCapharnaum::CARAC_AGE = "Âge";
 
 Hist* UniversCapharnaum::ExecuterGenerateurHistoire()

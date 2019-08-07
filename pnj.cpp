@@ -48,6 +48,15 @@ void Pnj::InitialiserPerso()
                                    MODE_AFFICHAGE::ma_Texte);
     GestionnaireCarac::GetGestionnaireCarac()->AjouterCarac(caracPeuple);
     m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_PEUPLE);
+
+    Carac* caracSousGroupe = new Carac(UniversCapharnaum::CARAC_SOUS_GROUPE,
+                                   UniversCapharnaum::CARAC_SOUS_GROUPE,
+                                   "pas de sous groupe",
+                                   "",
+                                   "Nation / Clan",
+                                   MODE_AFFICHAGE::ma_Texte);
+    GestionnaireCarac::GetGestionnaireCarac()->AjouterCarac(caracSousGroupe);
+    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_SOUS_GROUPE);
 }
 
 

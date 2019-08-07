@@ -57,8 +57,15 @@ Effet* GenHistGenPnj::GenererEffetSelectionPeuple()
 
     for (int i = 0 ; i < Peuple::PEUPLES.length(); ++i) {
         Peuple peuple(Peuple::PEUPLES[i]);
-        /*Choix* choixCourtisan = */m_GenerateurEvt->AjouterChoixChangeurDeCarac(
+        Choix* choixPeuple = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
                     peuple.m_Peuple, UniversCapharnaum::CARAC_PEUPLE, peuple.m_Peuple);
+
+        // ajout de choix de sous nation
+        if ( peuple.m_Peuple == Peuple::ESCARTE) {
+            choixPeuple->m_GoToEffetId = "ChoixNationEscarte";
+        } else {
+            choixPeuple->m_GoToEffetId = "ChoixSexe";
+        }
 
     }
 
@@ -66,6 +73,40 @@ Effet* GenHistGenPnj::GenererEffetSelectionPeuple()
     Peuple peupleAlCaph2(Peuple::AleatoireCapharnaum());
     Choix* choixAleatoireCaph = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
                  "ALEATOIRE COMPLET", UniversCapharnaum::CARAC_PEUPLE, peupleAlCaph2.m_Peuple);
+    // sous groupe tout aussi aléatoire :
+    choixAleatoireCaph->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_SOUS_GROUPE, peupleAlCaph2.m_SousGroupe);
+    // Age aléatoire aussi
+    Age AgeAl2(Age::AgeAleatoire());
+    choixAleatoireCaph->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_AGE, QString::number(AgeAl2.m_Age));
+    //sexe aléatoire aussi :
+    Sexe SexeAl2;
+    choixAleatoireCaph->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_SEXE, SexeAl2.m_Sexe);
+    choixAleatoireCaph->m_GoToEffetId = "FinGeneration";
+
+    return effet;
+
+}
+Effet* GenHistGenPnj::GenererEffetSelectionNationEscarte()
+{
+    Effet* effet = m_GenerateurEvt->AjouterEffetNarration("De quel sous groupe de ce peuple fait partie votre pnj ?", "", "ChoixNationEscarte");
+
+    Peuple escarteRand(Peuple::AleatoireEscarte());
+    m_GenerateurEvt->AjouterChoixChangeurDeCarac(
+                 "Aleatoire du Capharnaum", UniversCapharnaum::CARAC_SOUS_GROUPE, escarteRand.m_SousGroupe);
+
+    for (int i = 0 ; i < Peuple::SOUS_GROUPE_ESCARTE.length(); ++i) {
+
+        Choix* choixPeuple = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
+                    Peuple::SOUS_GROUPE_ESCARTE[i], UniversCapharnaum::CARAC_SOUS_GROUPE, Peuple::SOUS_GROUPE_ESCARTE[i]);
+
+        choixPeuple->m_GoToEffetId = "ChoixSexe";
+
+    }
+
+    // mène direct à la fin de la génération en aléatoire complet :
+    Peuple escarteRand2(Peuple::AleatoireEscarte());
+    Choix* choixAleatoireCaph = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
+                 "ALEATOIRE COMPLET", UniversCapharnaum::CARAC_SOUS_GROUPE, escarteRand2.m_SousGroupe);
     // Age aléatoire aussi
     Age AgeAl2(Age::AgeAleatoire());
     choixAleatoireCaph->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_AGE, QString::number(AgeAl2.m_Age));
@@ -133,7 +174,7 @@ Effet* GenHistGenPnj::GenererEffetSelectionAge()
 
 Effet* GenHistGenPnj::GenererEffetSelectionSexe()
 {
-    Effet* effet = m_GenerateurEvt->AjouterEffetNarration("Quel est le sexe de votre pnj ?");
+    Effet* effet = m_GenerateurEvt->AjouterEffetNarration("Quel est le sexe de votre pnj ?", "", "ChoixSexe");
 
     Sexe SexeAl;
     /*Choix* choixAleatoire =*/ m_GenerateurEvt->AjouterChoixChangeurDeCarac(
@@ -164,6 +205,7 @@ void DeterminerImageDepuisCaracs()
     int age = GestionnaireCarac::GetCaracValueAsInt(UniversCapharnaum::CARAC_AGE);
     QString metier = GestionnaireCarac::GetCaracValue(UniversCapharnaum::CARAC_METIER);
     QString peuple = GestionnaireCarac::GetCaracValue(UniversCapharnaum::CARAC_PEUPLE);
+    QString sousGroupe = GestionnaireCarac::GetCaracValue(UniversCapharnaum::CARAC_SOUS_GROUPE);
 
     QList<QString> ToutesLesImagesPossibles = {};
 
@@ -602,7 +644,7 @@ void DeterminerImageDepuisCaracs()
 
     Univers::ME->GetExecHistoire()->GetExecEffetActuel(false)->ChargerImage(portrait);
 
-    QString nom = Peuple::GenererNom(peuple, sexe);
+    QString nom = Peuple::GenererNom(peuple, sexe, sousGroupe);
     IPerso::GetPersoInterface()->GetPersoCourant()->MajNom(nom);
     IPerso::GetPersoInterface()->RafraichirAffichage();
 
@@ -615,6 +657,7 @@ void GenHistGenPnj::GenererEvtsAccueil()
     /*Evt* Debut = */this->AjouterEvt("Debut", "Génération du eprso par les choix");
     GenererEffetSelectionMetier();
     GenererEffetSelectionPeuple();
+    GenererEffetSelectionNationEscarte();
     GenererEffetSelectionSexe();
     GenererEffetSelectionAge();
 
