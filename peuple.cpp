@@ -31,11 +31,24 @@ QList<QString> Peuple::SOUS_GROUPE_ESCARTE = {
 QString Peuple::GenererNom(QString peuple, QString sexe, QString sousensemble)
 {
     if ( peuple == Peuple::SAABI) {
-        return ( (sexe == Sexe::MALE) ?
-                 Peuple::PRENOMS_SAABI_MALES[rand() % Peuple::PRENOMS_SAABI_MALES.length()] :
-                 Peuple::PRENOMS_SAABI_FEMELLES[rand() % Peuple::PRENOMS_SAABI_FEMELLES.length()] )
-                + " " +
-                Peuple::NOMS_SAABI[rand() % Peuple::NOMS_SAABI.length()];
+
+        if ( sexe == Sexe::MALE) {
+            QString nomTotal = Peuple::PRENOMS_SAABI_MALES[rand() % Peuple::PRENOMS_SAABI_MALES.length()] + " ";
+            if(rand()%2 == 0) {
+                nomTotal += Peuple::NOMS_SAABI[rand() % Peuple::NOMS_SAABI.length()];
+            } else {
+                nomTotal += "Ibn " + Peuple::PRENOMS_SAABI_MALES[rand() % Peuple::PRENOMS_SAABI_MALES.length()];
+            }
+            return nomTotal;
+        } else {
+            QString nomFem = Peuple::PRENOMS_SAABI_FEMELLES[rand() % Peuple::PRENOMS_SAABI_FEMELLES.length()] + " ";
+            if(rand()%2 == 0) {
+                nomFem += Peuple::NOMS_SAABI[rand() % Peuple::NOMS_SAABI.length()];
+            } else {
+                nomFem += "Bint " + Peuple::PRENOMS_SAABI_FEMELLES[rand() % Peuple::PRENOMS_SAABI_FEMELLES.length()];
+            }
+            return nomFem;
+        }
     } else if ( peuple == Peuple::ESCARTE ) {
         if ( sousensemble == "") {
             switch(rand()%3) {
@@ -191,13 +204,19 @@ QVector<QString> Peuple::PRENOMS_SAABI_MALES = {
     "Abd Ar-Rahman", "Abd Ar-Razak", "Abd As-Samad", "Abd As-Slam", "Abd El-Jabar", "Abd El-Matine", "Abd El-Samii",
     "Abderrafi", "Abdessalam", "Abid", "Abidi", "Abû Bakr", "Achraf", "Adam", "Adib", "Adil", "Adnâan", "Afif", "Afzal",
     "Ahid", "Ahmed", "Aïssa", "Akram", "Altair", "Ali", "Amar", "Amine", "Amir", "Aniq", "Anisse", "Anwar", "Arbi", "Ari",
-    "Arif", "Asmar", "Awab", "Ayham", "Aymane", "Ayoub", "Aziz",
-    "Azz Ad-Din"
+    "Arif", "Asmar", "Awab", "Ayham", "Aymane", "Ayoub", "Aziz", "Azz Ad-Din", "Bachir", "Badr", "Badreddine", "Baha-Eddine",
+    "Bakir", "Baligh", "Bara'", "Bassem", "Bayrem", "Belkacem", "Bilal", "Borhene", "Boualem", "Boubakar", "Boubakr", "Boulbaba",
+    "Boulbaba", "Brahim", "Chamseddine", "Chaabane", "Chadli", "Chahid", "Chafik", "Chakib", "Charafeddine", "Charif", "Choukri",
+    "Chiheb", "Ciel", "Daoud", "Dalil", "Diyaeddine", "Dayazell", "Djamel", "Jebril", "Driss", "Dine", "Dom", "Djemaa", "Djibril",
+    "Djillali", "Dib", "Djawad", "Djaouad", "Dayâan", "Daoud"
 };
 QVector<QString> Peuple::PRENOMS_SAABI_FEMELLES = {
     "Atiqua", "Abir", "Abla", "Afaf", "Ahida", "Ahlam", "Aïcha", "Alia", "Alma", "Alya", "Amal", "Amina",
     "Amira", "Amna", "Aniqa", "Anissa", "Awatif", "Arbia", "Arifa", "Arij", "Asma", "Asmahane", "Assia",
-    "Atiqua", "Aya", "Aziza", "Azza"
+    "Atiqua", "Aya", "Aziza", "Azza", "Badra", "Bahia", "Bahija", "Balkis", "Basma", "Baya", "Bayan", "Beha", "Beya",
+    "Bouchra", "Bouthaïna", "Shemsa", "Camilla", "Camélia", "Célia", "Chahida", "Chahla", "Chama", "Chafika", "Chaïnez",
+    "Cherine", "Chérifa", "Cirine", "Dalal", "Dalya", "Diyaa", "Dalila", "Donia", "Dounia", "Dino", "Djihane", "Djouhara",
+    "Djaouida", "Dina", "Dhekra"
 };
 
 Peuple Peuple::AleatoireCapharnaum()
