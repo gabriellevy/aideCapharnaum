@@ -54,6 +54,8 @@ SOURCES += \
         main.cpp \
     aspectratiolabel.cpp \
     metier.cpp \
+    particularitesphysiques.cpp \
+    particularitespsy.cpp \
     peuple.cpp \
     pnj.cpp \
     sexe.cpp \
@@ -88,6 +90,8 @@ HEADERS += \
     aspectratiolabel.h \
     genhistgenpnj.h \
     metier.h \
+    particularitesphysiques.h \
+    particularitespsy.h \
     peuple.h \
     pnj.h \
     sexe.h \

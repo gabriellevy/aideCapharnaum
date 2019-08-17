@@ -1,18 +1,24 @@
 #include "age.h"
-#include <QTime>
+#include <chrono>
+#include <random>
 
 Age::Age(QString id):m_Tranche(id)
 {
-    QTime time = QTime::currentTime();
-    qsrand(static_cast<uint>(time.msec()));
+    // construct a trivial random generator engine from a time-based seed:
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
     if ( m_Tranche == TRANCHES[0]) {
-        m_Age = 5 + rand()%11;
+        std::uniform_int_distribution<int> distribution(0,11);
+        m_Age = 5 + distribution(generator);
     }else if ( m_Tranche == TRANCHES[1]) {
-        m_Age = 15 + rand()%10;
+        std::uniform_int_distribution<int> distribution(0,10);
+        m_Age = 15 + distribution(generator);
     }else if ( m_Tranche == TRANCHES[2]) {
-        m_Age = 25 + rand()%30;
+        std::uniform_int_distribution<int> distribution(0,30);
+        m_Age = 25 + distribution(generator);
     } else  {
-        m_Age = 55 + rand()%25;
+        std::uniform_int_distribution<int> distribution(0,25);
+        m_Age = 55 + distribution(generator);
     }
 }
 
@@ -25,7 +31,11 @@ QList<QString> Age::TRANCHES = {
 
 Age Age::AgeAleatoire()
 {
-    int val = rand() % 100;
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
+    std::uniform_int_distribution<int> distribution(0,100);
+    int val = distribution(generator);
+
     QString id = "";
     if ( val < 5 )
         id = Age::TRANCHES[0];

@@ -57,6 +57,33 @@ void Pnj::InitialiserPerso()
                                    MODE_AFFICHAGE::ma_Texte);
     GestionnaireCarac::GetGestionnaireCarac()->AjouterCarac(caracSousGroupe);
     m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_SOUS_GROUPE);
+
+    Carac* caracTaillec = new Carac(UniversCapharnaum::CARAC_TAILLE,
+                             UniversCapharnaum::CARAC_TAILLE,
+                             "nom invalide",
+                             "",
+                             "Taille",
+                             MODE_AFFICHAGE::ma_Texte);
+    GestionnaireCarac::GetGestionnaireCarac()->AjouterCarac(caracTaillec);
+    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_TAILLE);
+
+    Carac* caracPartic = new Carac(UniversCapharnaum::CARAC_PARTICULARITES,
+                             UniversCapharnaum::CARAC_PARTICULARITES,
+                             "nom invalide",
+                             "",
+                             "Particularités physiques",
+                             MODE_AFFICHAGE::ma_Texte);
+    GestionnaireCarac::GetGestionnaireCarac()->AjouterCarac(caracPartic);
+    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_PARTICULARITES);
+
+    Carac* caracParticPsy = new Carac(UniversCapharnaum::CARAC_PARTICUL_PSY,
+                             UniversCapharnaum::CARAC_PARTICUL_PSY,
+                             "nom invalide",
+                             "",
+                             "Particularités psychologiques",
+                             MODE_AFFICHAGE::ma_Texte);
+    GestionnaireCarac::GetGestionnaireCarac()->AjouterCarac(caracParticPsy);
+    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_PARTICUL_PSY);
 }
 
 

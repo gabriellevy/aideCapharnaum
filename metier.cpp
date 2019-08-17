@@ -4,19 +4,27 @@
 
 Metier::Metier(QString id):m_GroupeMetier(id)
 {
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
+
     // détermination du métier final parmi els sous métiers possibles à partir du métier déterminé
     if (id == "Artisan") {
-        m_MetierFInal = METIERS_ARTISAN[rand() % METIERS_ARTISAN.length()];
+        std::uniform_int_distribution<int> distribution(0, METIERS_ARTISAN.length()-1);
+        m_MetierFInal = METIERS_ARTISAN[distribution(generator)];
     } else if (id == "Soldat") {
         m_MetierFInal = id + " ";
-        m_MetierFInal += METIERS_GUERRIER[rand() % METIERS_GUERRIER.length()];
+        std::uniform_int_distribution<int> distribution(0, METIERS_GUERRIER.length()-1);
+        m_MetierFInal += METIERS_GUERRIER[distribution(generator)];
     } else if (id == "Mercenaire") {
         m_MetierFInal = id + " ";
-        m_MetierFInal += METIERS_GUERRIER[rand() % METIERS_GUERRIER.length()];
+        std::uniform_int_distribution<int> distribution(0, METIERS_GUERRIER.length()-1);
+        m_MetierFInal += METIERS_GUERRIER[distribution(generator)];
     } else if (id == "Artiste") {
-        m_MetierFInal = METIERS_ARTISTE[rand() % METIERS_ARTISTE.length()];
+        std::uniform_int_distribution<int> distribution(0, METIERS_ARTISTE.length()-1);
+        m_MetierFInal = METIERS_ARTISTE[distribution(generator)];
     } else if (id == "Malandrin") {
-        m_MetierFInal = METIERS_MALANDRINS[rand() % METIERS_MALANDRINS.length()];
+        std::uniform_int_distribution<int> distribution(0, METIERS_MALANDRINS.length()-1);
+        m_MetierFInal = METIERS_MALANDRINS[distribution(generator)];
     } else {
         m_MetierFInal = id;
     }
@@ -42,6 +50,11 @@ QString Metier::FABRICANT_MEUBLES = "Fabricant de meubles";
 QString Metier::PAYSAN = "Paysan";
 QString Metier::ARCHER = "Archer";
 QString Metier::VAGABOND = "Vagabond";
+QString Metier::DRESSEUR = "Dresseur/palefrenier";
+QString Metier::VOLEUR = "Voleur";
+QString Metier::ESPION = "Espion";
+QString Metier::BANDIT = "bandit";
+QString Metier::ESCROC = "Escroc";
 
 QList<QString> Metier::METIERS_GUERRIER = {
     "artilleur",
@@ -73,11 +86,11 @@ QList<QString> Metier::METIERS_ARTISTE = {
 };
 
 QList<QString> Metier::METIERS_MALANDRINS = {
-    "Voleur",
     Metier::ASSASSIN,
-    "Espion",
-    "bandit",
-    "Escroc"
+    Metier::VOLEUR,
+    Metier::ESPION,
+    Metier::BANDIT,
+    Metier::ESCROC
 };
 
 QList<QString> Metier::METIERS = {
@@ -85,7 +98,7 @@ QList<QString> Metier::METIERS = {
     "Malandrin",
      Metier::COURTISAN,
     "Aubergiste",
-    "Dresseur/palefrenier",
+    Metier::DRESSEUR,
     "Ingénieur/architecte",
     Metier::ERUDIT,
     "Diplomate",
@@ -114,6 +127,15 @@ bool Metier::EstGuerrier(QString metier)
             (metier.left(Metier::MERCENAIRE.length()) == Metier::MERCENAIRE));
 }
 
+bool Metier::EstMalandrin(QString metier)
+{
+    for (int i = 0 ; i < METIERS_MALANDRINS.length() ; ++i) {
+         if ( metier == METIERS_MALANDRINS[i])
+             return true;
+    }
+    return false;
+}
+
 bool Metier::EstCavalier(QString metier)
 {
     return (metier.right(Metier::CAVALIER.length()) == Metier::CAVALIER);
@@ -124,7 +146,7 @@ Metier Metier::MetierAleatoire()
     // construct a trivial random generator engine from a time-based seed:
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine generator(seed);
-    std::uniform_int_distribution<int> distribution(0,METIERS.length());
+    std::uniform_int_distribution<int> distribution(0,METIERS.length()-1);
 
     return Metier(METIERS[distribution(generator)]);
 }

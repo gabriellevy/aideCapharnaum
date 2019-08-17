@@ -15,6 +15,9 @@ public:
     Hist* ExecuterGenerateurHistoire();
 
     static QString CARAC_METIER;
+    static QString CARAC_PARTICULARITES;
+    static QString CARAC_TAILLE;
+    static QString CARAC_PARTICUL_PSY;
     static QString CARAC_SEXE;
     static QString CARAC_PEUPLE;
     static QString CARAC_SOUS_GROUPE;

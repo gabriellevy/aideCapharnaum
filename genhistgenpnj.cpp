@@ -2,7 +2,8 @@
 #include "../destinLib/gestionnairecarac.h"
 #include "universcapharnaum.h"
 #include "pnj.h"
-#include <QTime>
+#include <chrono>
+#include <random>
 #include "metier.h"
 #include "peuple.h"
 #include "sexe.h"
@@ -10,12 +11,10 @@
 #include "../destinLib/perso.h"
 #include "../destinLib/gestionnairecarac.h"
 #include "../destinLib/execeffet.h"
+#include "particularitesphysiques.h"
+#include "particularitespsy.h"
 
-GenHistGenPnj::GenHistGenPnj(Hist* histoireGeneree):GenHistoire (histoireGeneree)
-{
-    QTime time = QTime::currentTime();
-    qsrand(static_cast<uint>(time.msec()));
-}
+GenHistGenPnj::GenHistGenPnj(Hist* histoireGeneree):GenHistoire (histoireGeneree) {}
 
 Hist* GenHistGenPnj::GenererHistoire()
 {
@@ -52,6 +51,7 @@ Effet* GenHistGenPnj::GenererEffetSelectionPeuple()
     Peuple peupleAlCaph2(Peuple::AleatoireCapharnaum());
     Choix* choixAleatoireCaph = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
                  "FIN DE PERSO ALEATOIRE", UniversCapharnaum::CARAC_PEUPLE, peupleAlCaph2.m_Peuple);
+    choixAleatoireCaph->AjouterChangeurDeCarac(UniversCapharnaum::CARAC_SOUS_GROUPE, peupleAlCaph2.m_SousGroupe);
     // sous groupe tout aussi aléatoire :
     choixAleatoireCaph->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_SOUS_GROUPE, peupleAlCaph2.m_SousGroupe);
     // Age aléatoire aussi
@@ -63,11 +63,13 @@ Effet* GenHistGenPnj::GenererEffetSelectionPeuple()
     choixAleatoireCaph->m_GoToEffetId = "FinGeneration";
 
     Peuple peupleAlCaph(Peuple::AleatoireCapharnaum());
-    m_GenerateurEvt->AjouterChoixChangeurDeCarac(
+    Choix* choixalCaph = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
                  "Aleatoire du Capharnaum", UniversCapharnaum::CARAC_PEUPLE, peupleAlCaph.m_Peuple);
+    choixalCaph->AjouterChangeurDeCarac(UniversCapharnaum::CARAC_SOUS_GROUPE, peupleAlCaph.m_SousGroupe);
     Peuple peupleAlSud(Peuple::AleatoireSudJazirat());
-    m_GenerateurEvt->AjouterChoixChangeurDeCarac(
+    Choix* choixalSud = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
                 "Aleatoire du sud de Jazirât", UniversCapharnaum::CARAC_PEUPLE, peupleAlSud.m_Peuple);
+    choixalSud->AjouterChangeurDeCarac(UniversCapharnaum::CARAC_SOUS_GROUPE, peupleAlCaph.m_SousGroupe);
 
     for (int i = 0 ; i < Peuple::PEUPLES.length(); ++i) {
         Peuple peuple(Peuple::PEUPLES[i]);
@@ -133,6 +135,7 @@ Effet* GenHistGenPnj::GenererEffetSelectionMetier()
     // peuple aléatoire aussi :
     Peuple peupleAlCaph2(Peuple::AleatoireCapharnaum());
     choixAleatoireComplet->AjouterChangeurDeCarac(UniversCapharnaum::CARAC_PEUPLE, peupleAlCaph2.m_Peuple);
+    choixAleatoireComplet->AjouterChangeurDeCarac(UniversCapharnaum::CARAC_SOUS_GROUPE, peupleAlCaph2.m_SousGroupe);
     // Age aléatoire aussi
     Age AgeAl2(Age::AgeAleatoire());
     choixAleatoireComplet->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_AGE, QString::number(AgeAl2.m_Age));
@@ -200,19 +203,60 @@ Effet* GenHistGenPnj::GenererEffetSelectionSexe()
     return effet;
 }
 
-void DeterminerImageDepuisCaracs()
+void DeterminerTailleDepuisCaracs(QString sexe, int age, QString metier, QString peuple, QString sousGroupe)
 {
-    QString sexe = GestionnaireCarac::GetCaracValue(UniversCapharnaum::CARAC_SEXE);
-    int age = GestionnaireCarac::GetCaracValueAsInt(UniversCapharnaum::CARAC_AGE);
-    QString metier = GestionnaireCarac::GetCaracValue(UniversCapharnaum::CARAC_METIER);
-    QString peuple = GestionnaireCarac::GetCaracValue(UniversCapharnaum::CARAC_PEUPLE);
-    QString sousGroupe = GestionnaireCarac::GetCaracValue(UniversCapharnaum::CARAC_SOUS_GROUPE);
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
+    std::uniform_int_distribution<int> distribution(0, 20);
+    int taille = 0;
 
+    if ( peuple == Peuple::SAABI || peuple == Peuple::SHIRADIM) {
+        if ( sexe == Sexe::MALE) {
+            taille = 160 + distribution(generator);
+        } else {
+            taille = 148 + distribution(generator);
+        }
+    } else if ( peuple == Peuple::ESCARTE) {
+        if ( sousGroupe == Peuple::ARAGON) {
+            if ( sexe == Sexe::MALE) {
+                taille = 160 + distribution(generator);
+            } else {
+                taille = 149 + distribution(generator);
+            }
+        } else if ( sousGroupe == Peuple::OCCIDENTIN) {
+            if ( sexe == Sexe::MALE) {
+                taille = 164 + distribution(generator);
+            } else {
+                taille = 151 + distribution(generator);
+            }
+        } else if ( sousGroupe == Peuple::DORKADE) {
+            if ( sexe == Sexe::MALE) {
+                taille = 185 + distribution(generator);
+            } else {
+                taille = 175 + distribution(generator);
+            }
+        }
+    } else if ( peuple == Peuple::AGALANTHEEN || peuple == Peuple::ALFARIQN) {
+        if ( sexe == Sexe::MALE) {
+            taille = 164 + distribution(generator);
+        } else {
+            taille = 151 + distribution(generator);
+        }
+    }
+
+    GestionnaireCarac::SetValeurACaracId(UniversCapharnaum::CARAC_TAILLE, QString::number(taille));
+}
+
+void DeterminerImageDepuisCaracs(QString sexe, int age, QString metier, QString peuple, QString sousGroupe)
+{
     QList<QString> ToutesLesImagesPossibles = {};
 
     if ( sexe == Sexe::MALE)/* hommes*/ {
         // homme
         // tous les peuples
+        if ( Metier::EstMalandrin(metier)) {
+            ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/d489410f69ac935fb57a9d21b5256baa.jpg");
+        }
         if ( age > 20 ) {
             if (age < 50 ) {
                 ToutesLesImagesPossibles.push_back(":/images/Saabi1/c133738f676b3af58f7690c5f68fc655.jpg");
@@ -251,6 +295,7 @@ void DeterminerImageDepuisCaracs()
                             ToutesLesImagesPossibles.push_back(":/images/Alfariqn/e25a9700b77f11b6cd35b2b36502255c.jpg");
                             ToutesLesImagesPossibles.push_back(":/images/Divers/ffe8b0f1b7f5882fc8ff738b18a20dd5 - Copie.jpg");
                         } else if ( metier == Metier::COURTISAN) {
+                            ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/19235620-arabian-musician-medieval-market-oropesa-toledo-spain-21-04-2013.jpg");
                             ToutesLesImagesPossibles.push_back(":/images/Alfariqn/2e87c412a04f333a43c2d9e1beb6e75c.jpg");
                             ToutesLesImagesPossibles.push_back(":/images/Alfariqn/6a9c461a70873fd9bf7140a6dcdfc510.jpg");
                             ToutesLesImagesPossibles.push_back(":/images/Alfariqn/73606fc49a2870773e97222c4657ec52.jpg");
@@ -259,6 +304,8 @@ void DeterminerImageDepuisCaracs()
                         } else if ( metier == Metier::PRETRE) {
                             ToutesLesImagesPossibles.push_back(":/images/Alfariqn/6c36ec57f6c9a5541727545d5d100044.jpg");
                             ToutesLesImagesPossibles.push_back(":/images/Alfariqn/f745f6a28f537bac5ad371d392561b4c.jpg");
+                        } else if ( metier == Metier::DRESSEUR) {
+                            ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/2b4689a3d3259c7ff6fc6c6c5d001ad0.jpg");
                         }
                     }
                 }
@@ -271,11 +318,23 @@ void DeterminerImageDepuisCaracs()
                 }
             } else if ( Metier::EstGuerrier(metier)) {
                 ToutesLesImagesPossibles.push_back(":/images/Saabi1/f3e5769ecd9bb9717dcdfe0deaf72f31.jpg");
+                ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/523f9eed62a39dda7dba90f58d68ee2a.jpg");
+            } else if ( metier == Metier::DRESSEUR ) {
+                if ( age > 20 )  {
+                    if ( age < 60) {
+                        ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/3164cf88178353f9b4a372d16978b8fa.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/569a06349c164fa3aa6f5d466d3265a7.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/a9022d8ab778c926634ffaf0f5e4738c.jpg");
+                    }
+                }
             }
 
             if ( age > 16) {
                 ToutesLesImagesPossibles.push_back(":/images/Saabi1/6e329b69b1b6de105cce57c87e25218c.jpg");
                 ToutesLesImagesPossibles.push_back(":/images/Saabi1/75aec4f5200c1255ac6287380a946a36.jpg");
+                if ( age < 55 ) {
+                    ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/339c742d3e0da9479b953076e452bdde.jpg");
+                }
 
                 if ( Metier::EstGuerrier(metier)) {
                     ToutesLesImagesPossibles.push_back(":/images/Divers/aac88c70480ca0a50f83c02ef01ebea5.jpg");
@@ -284,6 +343,7 @@ void DeterminerImageDepuisCaracs()
                     if ( Metier::EstCavalier(metier))  {
                         ToutesLesImagesPossibles.push_back(":/images/Divers/b13270e47bdacd407905b320faeb5105 - Copie.jpg");
                         ToutesLesImagesPossibles.push_back(":/images/Saabi1/c9e876999e7552a4c6079c9478c7795e.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/6e63042c2af68390385841d767d1beaa.jpg");
                     }
                     if ( age < 40) {
                         ToutesLesImagesPossibles.push_back(":/images/Saabi1/61d573a7ebd905d8c4d748a942c68b0b.jpg");
@@ -303,6 +363,8 @@ void DeterminerImageDepuisCaracs()
                    if ( age < 35 ) {
                        ToutesLesImagesPossibles.push_back(":/images/Divers/195f954a0cc64a510432c2c1177e0c30.jpg");
                    }
+                } else if ( metier == Metier::DRESSEUR) {
+                    ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/837a9471e4714ae993955c4eb7ef4872.jpg");
                 }
             }
         } else if ( peuple == Peuple::PEUPLES[1]) // Shiradim
@@ -322,6 +384,8 @@ void DeterminerImageDepuisCaracs()
                     ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/5c1996335ae1f4cfa44f2221d720ede1.jpg");
                 } else if ( metier==Metier::PRETRE) {
                     ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/e0cb2a041352a651cbddd74fdf2f4d3c.jpg");
+                } else if ( metier == Metier::DRESSEUR) {
+                    ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/cd21916507e3686221e60deb6a581db6.jpg");
                 }
                 if ( age > 40 ) {
                     if ( age < 70 ){
@@ -338,6 +402,7 @@ void DeterminerImageDepuisCaracs()
                     ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/41eef8f85eac97410afbb84f88f7b0bb.jpg");
                     ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/08ecb51c8918f52f84b1624a9ddec153 - Copie (2).jpg");
                     if ( metier == Metier::ELEVEUR) {
+                        ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/1913464_10203133102067826_152445759_o.jpg");
                         ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/0a5c568123d015944577095c208ea488.jpg");
                         ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/c538ae6e93af95a55171a841e50d523c.jpg");
                     } else if (metier == Metier::COURTISAN) {
@@ -384,10 +449,17 @@ void DeterminerImageDepuisCaracs()
                         ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/2b5eb752aff68f234bf57174ca2c6f26 - Copie (3).jpg");
                     } else if ( metier == Metier::FABRICANT_MEUBLES) {
                         ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/96f788ed6fe5242fee0e75eb25c8166c.jpg");
+                    } else if ( metier == Metier::DRESSEUR) {
+                        ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/59d88374973c00d327ee50f925c21704.jpg");
                     }
                 }
             }
 
+        }
+        else if ( peuple == Peuple::AGALANTHEEN) {
+            if ( Metier::EstGuerrier(metier)) {
+                ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/84dada1f224d52b7e3170ab941fb1096.jpg");
+            }
         }
 
         if ( peuple == Peuple::PEUPLES[0] || peuple == Peuple::PEUPLES[1]) // Saabi ou Shiradim
@@ -412,6 +484,12 @@ void DeterminerImageDepuisCaracs()
                         ToutesLesImagesPossibles.push_back(":/images/Divers/db92117d9c23e353768b18616d84a25e.jpg");
                     }
                 }
+            } else if ( metier == Metier::DRESSEUR) {
+                if ( age > 25 ) {
+                    if ( age < 50 ) {
+                        ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/04-buquet-fig-4-falconer-VA.jpg");
+                    }
+                }
             }
 
 
@@ -427,6 +505,9 @@ void DeterminerImageDepuisCaracs()
                 if ( age > 30) {
                     if ( metier == Metier::COURTISAN) {
                         ToutesLesImagesPossibles.push_back(":/images/Saabi1/149767922064770c0b9378083b75fba8.jpg");
+                        if ( age < 50 ) {
+                            ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/14e09bb348846084369766ac7c371a7e.jpg");
+                        }
                     } else if ( Metier::EstGuerrier(metier)) {
                         ToutesLesImagesPossibles.push_back(":/images/Saabi1/483147199532bfddaf94951e54a19485.jpg");
                         ToutesLesImagesPossibles.push_back(":/images/Saabi1/4ceae394a058429745eb1da0280c75a8.jpg");
@@ -488,32 +569,34 @@ void DeterminerImageDepuisCaracs()
         // femmes
         if ( peuple == Peuple::SAABI || peuple == Peuple::SHIRADIM || peuple == Peuple::AGALANTHEEN) {
             if ( age > 15) {
-                ToutesLesImagesPossibles.push_back(":/images/Saabi1/9cf7370699c72eecbe18bd80a8d34725.jpg");
-                if ( age < 40 ) {
-                    ToutesLesImagesPossibles.push_back(":/images/Divers/e38a8a9a5678cbefde2a8195ef794a56 - Copie.jpg");
-                    ToutesLesImagesPossibles.push_back(":/images/Divers/c20dffeb26a423583bf8aed3358a991b - Copie (2).jpg");
-                    ToutesLesImagesPossibles.push_back(":/images/Divers/10fccd8c43d42992bc8d93a9eeadd087 - Copie.jpg");
-                    ToutesLesImagesPossibles.push_back(":/images/Divers/10a391a3feec5d37bc4eb39622b02512.jpg");
-                    ToutesLesImagesPossibles.push_back(":/images/Saabi1/bc8b9345061a628a80f2f8df86a817c7.jpg");
-                    ToutesLesImagesPossibles.push_back(":/images/Saabi1/ce05271435ccac3e83e984682e55d4f1.jpg");
-                    ToutesLesImagesPossibles.push_back(":/images/Saabi1/f55b22471912bcf746d0767dc95af45d.jpg");
-                    ToutesLesImagesPossibles.push_back(":/images/Divers/10fccd8c43d42992bc8d93a9eeadd087.jpg");
-                    ToutesLesImagesPossibles.push_back(":/images/Divers/134f7fc65de72adf463a7af4548fa7eb - Copie.jpg");
-                    if ( metier == Metier::COURTISAN) {
-                        ToutesLesImagesPossibles.push_back(":/images/Divers/6ab119db33a32f46cf0cf4f1f99a4d15.jpg");
-                        ToutesLesImagesPossibles.push_back(":/images/Saabi1/2389ecfa77c450d7b529473d3c6f62a4.jpg");
-                        ToutesLesImagesPossibles.push_back(":/images/Saabi1/6c0e7528d8626443dbe17dd0a34d9b3b.jpg");
-                        ToutesLesImagesPossibles.push_back(":/images/Divers/fb427748876194449c11d3f61f2b654a - Copie.jpg");
-                        ToutesLesImagesPossibles.push_back(":/images/Divers/ffe8b0f1b7f5882fc8ff738b18a20dd5.jpg");
-                    } else if (metier == Metier::ASSASSIN ) {
-                        ToutesLesImagesPossibles.push_back(":/images/Saabi1/f91f78ac4b2dc8b451b56b1c763a54d4.jpg");
-                    } else if ( metier == Metier::DANSEUR) {
-                        ToutesLesImagesPossibles.push_back(":/images/Divers/195f954a0cc64a510432c2c1177e0c30 - Copie.jpg");
-                        ToutesLesImagesPossibles.push_back(":/images/Divers/8360db4df800981718d151e9b5167af2 - Copie.jpg");
-                        ToutesLesImagesPossibles.push_back(":/images/Divers/8360db4df800981718d151e9b5167af2.jpg");
-                        ToutesLesImagesPossibles.push_back(":/images/Divers/f87e681acca1afe7fb42c77c17d84b04.jpg");
-                    } else if ( metier == Metier::MUSICIEN) {
-                        ToutesLesImagesPossibles.push_back(":/images/Divers/a998bb83a831301588a77e62cd95d022.jpg");
+                if ( age < 60 ) {
+                    ToutesLesImagesPossibles.push_back(":/images/Saabi1/9cf7370699c72eecbe18bd80a8d34725.jpg");
+                    if ( age < 40 ) {
+                        ToutesLesImagesPossibles.push_back(":/images/Divers/e38a8a9a5678cbefde2a8195ef794a56 - Copie.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Divers/c20dffeb26a423583bf8aed3358a991b - Copie (2).jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Divers/10fccd8c43d42992bc8d93a9eeadd087 - Copie.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Divers/10a391a3feec5d37bc4eb39622b02512.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Saabi1/bc8b9345061a628a80f2f8df86a817c7.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Saabi1/ce05271435ccac3e83e984682e55d4f1.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Saabi1/f55b22471912bcf746d0767dc95af45d.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Divers/10fccd8c43d42992bc8d93a9eeadd087.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Divers/134f7fc65de72adf463a7af4548fa7eb - Copie.jpg");
+                        if ( metier == Metier::COURTISAN) {
+                            ToutesLesImagesPossibles.push_back(":/images/Divers/6ab119db33a32f46cf0cf4f1f99a4d15.jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/Saabi1/2389ecfa77c450d7b529473d3c6f62a4.jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/Saabi1/6c0e7528d8626443dbe17dd0a34d9b3b.jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/Divers/fb427748876194449c11d3f61f2b654a - Copie.jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/Divers/ffe8b0f1b7f5882fc8ff738b18a20dd5.jpg");
+                        } else if (metier == Metier::ASSASSIN ) {
+                            ToutesLesImagesPossibles.push_back(":/images/Saabi1/f91f78ac4b2dc8b451b56b1c763a54d4.jpg");
+                        } else if ( metier == Metier::DANSEUR) {
+                            ToutesLesImagesPossibles.push_back(":/images/Divers/195f954a0cc64a510432c2c1177e0c30 - Copie.jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/Divers/8360db4df800981718d151e9b5167af2 - Copie.jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/Divers/8360db4df800981718d151e9b5167af2.jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/Divers/f87e681acca1afe7fb42c77c17d84b04.jpg");
+                        } else if ( metier == Metier::MUSICIEN) {
+                            ToutesLesImagesPossibles.push_back(":/images/Divers/a998bb83a831301588a77e62cd95d022.jpg");
+                        }
                     }
                 }
             } else {
@@ -537,8 +620,13 @@ void DeterminerImageDepuisCaracs()
             if ( age > 15) {
                 if ( Metier::EstGuerrier(metier)) {
                     ToutesLesImagesPossibles.push_back(":/images/Saabi1/37495a30404751846515af3be96f4765.jpg");
+                } else if ( metier == Metier::DRESSEUR) {
+                    if ( age < 50 ) {
+                        ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/36027e8eb1417cff130a1a8afbd06566.jpg");
+                    }
                 }
                 if ( age > 25 ) {
+                    ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/b07d28a31c51986cfffd9e7f0142919a.jpg");
                     if ( age < 50 ) {
                         ToutesLesImagesPossibles.push_back(":/images/Saabi1/b05ba59aca2dca95106eabc8c22ffc3c.jpg");
                     }
@@ -587,6 +675,7 @@ void DeterminerImageDepuisCaracs()
         } else if ( peuple == Peuple::SAABI ) {
             if ( metier == Metier::COURTISAN) {
                 if ( age < 50 ) {
+                    ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/2a9703412c181423cfbccb716a4185f4.jpg");
                     ToutesLesImagesPossibles.push_back(":/images/Divers/94a9edddd34edcecdeac33611702a21f - Copie.jpg");
                 }
             } else if ( metier == Metier::ERUDIT) {
@@ -610,6 +699,9 @@ void DeterminerImageDepuisCaracs()
                     ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/41eef8f85eac97410afbb84f88f7b0bb - Copie.jpg");
                     if ( age > 60 ) /* vieilles escartes */ {
                         ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/14267318e4e80365aaa26b87b4c25556.jpg");
+                        if ( metier == Metier::PAYSAN) {
+                            ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/10363586_10203832702397397_6483138334025301259_n.jpg");
+                        }
                     }
                 }
                 if ( age < 60 ) {
@@ -619,9 +711,15 @@ void DeterminerImageDepuisCaracs()
                         ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/814461c8838652d4ad2b97d9c41b9d04.jpg");
                     } else if ( metier==Metier::FABRICANT_MEUBLES) {
                         ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/96f788ed6fe5242fee0e75eb25c8166c - Copie.jpg");
+                    } else if ( Metier::EstGuerrier(metier)) {
+                        ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/34b0f21fad633e97857949beac3153a3.jpg");
                     }
                     if ( age < 50) {
-                        if ( age < 30 ) {
+                        if ( age < 35 ) {
+                            if ( metier == Metier::DRESSEUR) {
+                                ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/5a41d919a2ffecf31e31806e7689086d.jpg");
+                                ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/c90339443334983d3de03bbd4603a83c.jpg");
+                            }
                             ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/ed26955f4f3c615a49fcd6b4dd916d9e.jpg");
                         }
                         ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/08ecb51c8918f52f84b1624a9ddec153 - Copie.jpg");
@@ -632,25 +730,64 @@ void DeterminerImageDepuisCaracs()
                             ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/14267318e4e80365aaa26b87b4c25556 - Copie (7).jpg");
                         } else if ( metier == Metier::MARCHAND) {
                             ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/63e58cd14243d61124a8346983961dff.jpg");
+                        } else if (Metier::EstCavalier(metier)) {
+                            ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/5e01f01691ae0050afa05897218ba885.jpg");
+                            ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/e8f23714dce7cbef3b44602a8846f043.jpg");
                         }
                    }
                 }
             }
         }
+        else if ( peuple == Peuple::AGALANTHEEN) {
+            if ( age > 16 ) {
+                if ( age < 40 ) {
+                    ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/84dada1f224d52b7e3170ab941fb1096 - Copie.jpg");
+                }
+            }
+        }
     }
 
-    ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/63e58cd14243d61124a8346983961dff.jpg");
+    ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/d489410f69ac935fb57a9d21b5256baa.jpg");
 
-    QString portrait = ToutesLesImagesPossibles[rand() % ToutesLesImagesPossibles.length()];
+
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
+    std::uniform_int_distribution<int> distribution(0, ToutesLesImagesPossibles.length()-1);
+
+    QString portrait = ToutesLesImagesPossibles[ distribution(generator) ];
 
     Univers::ME->GetExecHistoire()->GetExecEffetActuel(false)->ChargerImage(portrait);
 
+    // génération du nom
     QString nom = Peuple::GenererNom(peuple, sexe, sousGroupe);
     IPerso::GetPersoInterface()->GetPersoCourant()->MajNom(nom);
     IPerso::GetPersoInterface()->RafraichirAffichage();
 
-    Univers::ME->GetExecHistoire()->GetExecEffetActuel(false)->GetEffet()->m_Text += " " + portrait + "\n" + nom;
+    Univers::ME->GetExecHistoire()->GetExecEffetActuel(false)->GetEffet()->m_Text += (
+                " " + portrait + "\n" + nom
+                );
 
+}
+
+void FinaliserPerso()
+{
+   // ajout de compétences/caractéristqiues aléatoires :
+   ParticularitesPhysiques particularites;
+   QString particularitesStr = particularites.ToQString();
+   GestionnaireCarac::SetValeurACaracId(UniversCapharnaum::CARAC_PARTICULARITES, particularitesStr);
+
+   ParticularitesPsy particul;
+   QString particulStr = particul.ToQString();
+   GestionnaireCarac::SetValeurACaracId(UniversCapharnaum::CARAC_PARTICUL_PSY, particulStr);
+
+   QString sexe = GestionnaireCarac::GetCaracValue(UniversCapharnaum::CARAC_SEXE);
+   int age = GestionnaireCarac::GetCaracValueAsInt(UniversCapharnaum::CARAC_AGE);
+   QString metier = GestionnaireCarac::GetCaracValue(UniversCapharnaum::CARAC_METIER);
+   QString peuple = GestionnaireCarac::GetCaracValue(UniversCapharnaum::CARAC_PEUPLE);
+   QString sousGroupe = GestionnaireCarac::GetCaracValue(UniversCapharnaum::CARAC_SOUS_GROUPE);
+
+   DeterminerTailleDepuisCaracs( sexe, age, metier, peuple, sousGroupe);
+   DeterminerImageDepuisCaracs( sexe, age, metier, peuple, sousGroupe);
 }
 
 void GenHistGenPnj::GenererEvtsAccueil()
@@ -663,6 +800,6 @@ void GenHistGenPnj::GenererEvtsAccueil()
     GenererEffetSelectionAge();
 
     m_GenerateurEvt->AjouterEffetCallbackDisplay(
-                DeterminerImageDepuisCaracs,
+                FinaliserPerso,
                 "Choix terminé", "", "FinGeneration" );
 }

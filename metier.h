@@ -22,6 +22,7 @@ public:
     static Metier MetierAleatoire();
     static bool EstGuerrier(QString metier);
     static bool EstCavalier(QString metier);
+    static bool EstMalandrin(QString metier);
 
     static QString COURTISAN; // = noble au sens large, peut être diplomate ou autre mais avant tout riche et influent et de famille considérée
     static QString SOLDAT;
@@ -43,6 +44,11 @@ public:
     static QString PAYSAN;
     static QString ARCHER;
     static QString VAGABOND;
+    static QString DRESSEUR;
+    static QString VOLEUR;
+    static QString ESPION;
+    static QString BANDIT;
+    static QString ESCROC;
 };
 
 #endif // METIER_H

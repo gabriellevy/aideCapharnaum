@@ -14,6 +14,9 @@ UniversCapharnaum::UniversCapharnaum(ModeAffichage modeAffichage,
 }
 
 QString UniversCapharnaum::CARAC_METIER = "Métier";
+QString UniversCapharnaum::CARAC_PARTICULARITES = "Particularités physiques";
+QString UniversCapharnaum::CARAC_TAILLE = "Taille";
+QString UniversCapharnaum::CARAC_PARTICUL_PSY = "Particularités psychologiques";
 QString UniversCapharnaum::CARAC_SEXE = "Sexe";
 QString UniversCapharnaum::CARAC_PEUPLE = "Peuple";
 QString UniversCapharnaum::CARAC_SOUS_GROUPE = "SousGroupe";

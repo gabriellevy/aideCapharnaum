@@ -3,7 +3,21 @@
 #include <random>
 #include "sexe.h"
 
-Peuple::Peuple(QString id):m_Peuple(id) {}
+Peuple::Peuple(QString id, QString sousGroupe):m_Peuple(id), m_SousGroupe(sousGroupe)
+{
+    if ( m_SousGroupe == "") {
+        if ( id == Peuple::ESCARTE) {
+            unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+            std::default_random_engine generator(seed);
+            std::uniform_int_distribution<int> distribution(0, 6);
+            switch(distribution(generator)) {
+                case 0 :case 1 :case 2 :case 3 : this->m_SousGroupe =Peuple::OCCIDENTIN; break;
+                case 5 : this->m_SousGroupe =Peuple::DORKADE; break;
+                case 4 : this->m_SousGroupe =Peuple::ARAGON; break;
+            }
+        }
+    }
+}
 
 QString Peuple::ALFARIQN = "Alfariqn";
 QString Peuple::SAABI = "Saabi";
@@ -30,28 +44,54 @@ QList<QString> Peuple::SOUS_GROUPE_ESCARTE = {
 
 QString Peuple::GenererNom(QString peuple, QString sexe, QString sousensemble)
 {
-    if ( peuple == Peuple::SAABI) {
+    // construct a trivial random generator engine from a time-based seed:
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
+    std::uniform_int_distribution<int> distribution(0, 99999999999999999);
+
+    if ( peuple == Peuple::SHIRADIM) {
 
         if ( sexe == Sexe::MALE) {
-            QString nomTotal = Peuple::PRENOMS_SAABI_MALES[rand() % Peuple::PRENOMS_SAABI_MALES.length()] + " ";
-            if(rand()%2 == 0) {
-                nomTotal += Peuple::NOMS_SAABI[rand() % Peuple::NOMS_SAABI.length()];
+            QString nomTotal = Peuple::PRENOMS_SHIRADIM_MALES[distribution(generator) % Peuple::PRENOMS_SHIRADIM_MALES.length()] + " ";
+            if(distribution(generator)%4 == 0) {
+                // fille de [mère] => quand le père est inconnu, que l'enfant est un batard etc
+                nomTotal += "Bat " + Peuple::PRENOMS_SHIRADIM_FEMELLES[distribution(generator) % Peuple::PRENOMS_SHIRADIM_FEMELLES.length()];
             } else {
-                nomTotal += "Ibn " + Peuple::PRENOMS_SAABI_MALES[rand() % Peuple::PRENOMS_SAABI_MALES.length()];
+                nomTotal += "Bar " + Peuple::PRENOMS_SHIRADIM_MALES[distribution(generator) % Peuple::PRENOMS_SHIRADIM_MALES.length()];
             }
             return nomTotal;
         } else {
-            QString nomFem = Peuple::PRENOMS_SAABI_FEMELLES[rand() % Peuple::PRENOMS_SAABI_FEMELLES.length()] + " ";
-            if(rand()%2 == 0) {
-                nomFem += Peuple::NOMS_SAABI[rand() % Peuple::NOMS_SAABI.length()];
+            QString nomFem = Peuple::PRENOMS_SHIRADIM_FEMELLES[distribution(generator) % Peuple::PRENOMS_SHIRADIM_FEMELLES.length()] + " ";
+            if(distribution(generator)%4 == 0) {
+                // fille de [mère] => quand le père est inconnu, que l'enfant est un batard etc
+                nomFem += "Bat " + Peuple::PRENOMS_SHIRADIM_FEMELLES[distribution(generator) % Peuple::PRENOMS_SHIRADIM_FEMELLES.length()];
             } else {
-                nomFem += "Bint " + Peuple::PRENOMS_SAABI_FEMELLES[rand() % Peuple::PRENOMS_SAABI_FEMELLES.length()];
+                nomFem += "Bar " + Peuple::PRENOMS_SHIRADIM_MALES[distribution(generator) % Peuple::PRENOMS_SHIRADIM_MALES.length()];
+            }
+            return nomFem;
+        }
+    } else if ( peuple == Peuple::SAABI) {
+
+        if ( sexe == Sexe::MALE) {
+            QString nomTotal = Peuple::PRENOMS_SAABI_MALES[distribution(generator) % Peuple::PRENOMS_SAABI_MALES.length()] + " ";
+            if(distribution(generator)%2 == 0) {
+                nomTotal += Peuple::NOMS_SAABI[distribution(generator) % Peuple::NOMS_SAABI.length()];
+            } else {
+                nomTotal += "Ibn " + Peuple::PRENOMS_SAABI_MALES[distribution(generator) % Peuple::PRENOMS_SAABI_MALES.length()];
+            }
+            return nomTotal;
+        } else {
+            QString nomFem = Peuple::PRENOMS_SAABI_FEMELLES[distribution(generator) % Peuple::PRENOMS_SAABI_FEMELLES.length()] + " ";
+            if(distribution(generator)%2 == 0) {
+                nomFem += Peuple::NOMS_SAABI[distribution(generator) % Peuple::NOMS_SAABI.length()];
+            } else {
+                nomFem += "Bint " + Peuple::PRENOMS_SAABI_FEMELLES[distribution(generator) % Peuple::PRENOMS_SAABI_FEMELLES.length()];
             }
             return nomFem;
         }
     } else if ( peuple == Peuple::ESCARTE ) {
         if ( sousensemble == "") {
-            switch(rand()%3) {
+            switch(distribution(generator) % 3) {
             case 0 : sousensemble=Peuple::OCCIDENTIN; break;
             case 1 : sousensemble=Peuple::DORKADE; break;
             case 2 : sousensemble=Peuple::ARAGON; break;
@@ -59,22 +99,22 @@ QString Peuple::GenererNom(QString peuple, QString sexe, QString sousensemble)
         }
         if ( sousensemble == Peuple::OCCIDENTIN) {
             return ( (sexe == Sexe::MALE) ?
-                     Peuple::PRENOMS_OCCIDENTIN_MALES[rand() % Peuple::PRENOMS_OCCIDENTIN_MALES.length()] :
-                     Peuple::PRENOMS_OCCIDENTIN_FEMELLES[rand() % Peuple::PRENOMS_OCCIDENTIN_FEMELLES.length()] )
+                     Peuple::PRENOMS_OCCIDENTIN_MALES[distribution(generator) % Peuple::PRENOMS_OCCIDENTIN_MALES.length()] :
+                     Peuple::PRENOMS_OCCIDENTIN_FEMELLES[distribution(generator) % Peuple::PRENOMS_OCCIDENTIN_FEMELLES.length()] )
                     + " " +
-                    Peuple::NOMS_OCCIDENTIN[rand() % Peuple::NOMS_OCCIDENTIN.length()];
+                    Peuple::NOMS_OCCIDENTIN[distribution(generator) % Peuple::NOMS_OCCIDENTIN.length()];
         } else if (sousensemble == Peuple::ARAGON) {
             return ( (sexe == Sexe::MALE) ?
-                     Peuple::PRENOMS_ARAGON_MALES[rand() % Peuple::PRENOMS_ARAGON_MALES.length()] :
-                     Peuple::PRENOMS_ARAGON_FEMELLES[rand() % Peuple::PRENOMS_ARAGON_FEMELLES.length()] )
+                     Peuple::PRENOMS_ARAGON_MALES[distribution(generator) % Peuple::PRENOMS_ARAGON_MALES.length()] :
+                     Peuple::PRENOMS_ARAGON_FEMELLES[distribution(generator) % Peuple::PRENOMS_ARAGON_FEMELLES.length()] )
                     + " " +
-                    Peuple::NOMS_ARAGON[rand() % Peuple::NOMS_ARAGON.length()];
+                    Peuple::NOMS_ARAGON[distribution(generator) % Peuple::NOMS_ARAGON.length()];
         } else if (sousensemble == Peuple::DORKADE) {
             return ( (sexe == Sexe::MALE) ?
-                     Peuple::PRENOMS_DORKADE_MALES[rand() % Peuple::PRENOMS_DORKADE_MALES.length()] :
-                     Peuple::PRENOMS_DORKADE_FEMELLES[rand() % Peuple::PRENOMS_DORKADE_FEMELLES.length()] )
+                     Peuple::PRENOMS_DORKADE_MALES[distribution(generator) % Peuple::PRENOMS_DORKADE_MALES.length()] :
+                     Peuple::PRENOMS_DORKADE_FEMELLES[distribution(generator) % Peuple::PRENOMS_DORKADE_FEMELLES.length()] )
                     + " " +
-                    Peuple::NOMS_DORKADE[rand() % Peuple::NOMS_DORKADE.length()];
+                    Peuple::NOMS_DORKADE[distribution(generator) % Peuple::NOMS_DORKADE.length()];
         }
     }
 
@@ -82,12 +122,17 @@ QString Peuple::GenererNom(QString peuple, QString sexe, QString sousensemble)
 }
 
 QVector<QString> Peuple::PRENOMS_SHIRADIM_MALES = {
-    "Abel", "Abraham"
+    "Abel", "Abraham", "Aaron", "Abecassis", "Abitbol", "Abitboul", "Avraham", "Ibrahim", "Ari", "Ariel",
+    "Baru'kh", "Binyamin", "Boaz", "Daniel", "David", "Eli", "Ezekiel", "Ezra", "Ebenazar", "Gad", "Hillel", "Ioranan",
+    "Isaac", "Isaiah", "Levi", "Matitiaou", "Mena'khem", "Morde'khai", "Mogda", "Nathan", "Noam", "Reuven",
+    "Shaül", "Shimon", "Shiran", "Shlomo", "Uriel", "Yaacov", "Yeremiah", "Yergad", "Yonathan", "Yosef"
 };
 
-QVector<QString> Peuple::NOMS_SHIRADIM = {
-    "Aaron", "Abecassis", "Abehassera", "Abehcera", "Abehsera", "Abehserra", "Abehsira", "Abehssera", "Abihsera",
-    "Abihsira", "Abihssera", "Abihssira", "Abissera", "Boussera", "Abitbol", "Abitboul"
+QVector<QString> Peuple::PRENOMS_SHIRADIM_FEMELLES = {
+    "Abehassera", "Abehcera", "Abehsera", "Abehserra", "Abehsira", "Abehssera", "Abihsera",
+    "Abihsira", "Abihssera", "Abihssira", "Abissera", "Boussera", "Ariel", "Dara", "Devrah",
+    "Esther", "Hannah", "Leah", "Maya", "Miriam", "Naomi", "Oprah", "Rachel", "Ruth", "Sarah", "Shaïna",
+    "Shirel", "Shayna", "Shirel", "Susanna", "Tiamar", "Yudith", "Zelda"
 };
 
 QVector<QString> Peuple::NOMS_DORKADE = {
@@ -231,11 +276,11 @@ Peuple Peuple::AleatoireCapharnaum()
     if ( val < 35 )
         id = Peuple::SAABI;
     else if ( val < 75 )
-        id = Peuple::PEUPLES[1];
+        id = Peuple::SHIRADIM;
     else if ( val < 90 )
-        id = Peuple::PEUPLES[3];
+        id = Peuple::ESCARTE;
     else if (val < 99)
-        id = Peuple::PEUPLES[2];
+        id = Peuple::AGALANTHEEN;
     else {
         id = Peuple::ALFARIQN;
     }
@@ -246,11 +291,6 @@ Peuple Peuple::AleatoireCapharnaum()
 Peuple Peuple::AleatoireEscarte()
 {
     Peuple escarte(Peuple::ESCARTE);
-    switch(rand()%6) {
-    case 0 :case 1 :case 2 :case 3 : escarte.m_SousGroupe =Peuple::OCCIDENTIN; break;
-    case 5 : escarte.m_SousGroupe =Peuple::DORKADE; break;
-    case 4 : escarte.m_SousGroupe =Peuple::ARAGON; break;
-    }
     return escarte;
 }
 

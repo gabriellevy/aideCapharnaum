@@ -8,7 +8,7 @@
 class Peuple
 {
 public:
-    Peuple(QString id);
+    Peuple(QString id, QString sousGroupe = "");
 
     QString m_Peuple;
     QString m_SousGroupe = "";
@@ -44,8 +44,8 @@ public:
     static QVector<QString> PRENOMS_SAABI_MALES;
     static QVector<QString> PRENOMS_SAABI_FEMELLES;
 
-    static QVector<QString> NOMS_SHIRADIM;
     static QVector<QString> PRENOMS_SHIRADIM_MALES;
+    static QVector<QString> PRENOMS_SHIRADIM_FEMELLES;
 
     static QVector<QString> NOMS_ARAGON;
     static QVector<QString> NOMS_DORKADE;
