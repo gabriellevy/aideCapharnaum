@@ -311,7 +311,7 @@ void DeterminerImageDepuisCaracs(QString sexe, int age, QString metier, QString 
                 }
             }
         }
-        if ( peuple == Peuple::SAABI) { // Saabi
+        else if ( peuple == Peuple::SAABI) { // Saabi
             if ( metier == Metier::NOMADE) {
                 if ( age < 25 ) {
                     ToutesLesImagesPossibles.push_back(":/images/Saabi1/8e0d0ef586c3edf951fcc1a51a024c43.jpg");
@@ -367,7 +367,7 @@ void DeterminerImageDepuisCaracs(QString sexe, int age, QString metier, QString 
                     ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/837a9471e4714ae993955c4eb7ef4872.jpg");
                 }
             }
-        } else if ( peuple == Peuple::PEUPLES[1]) // Shiradim
+        } else if ( peuple == Peuple::SHIRADIM) // Shiradim
         {
             if (age > 55 ) {
                 ToutesLesImagesPossibles.push_back(":/images/Saabi1/6fe2457a0e47202be57fcfd3f72f554f.jpg");
@@ -386,6 +386,19 @@ void DeterminerImageDepuisCaracs(QString sexe, int age, QString metier, QString 
                     ToutesLesImagesPossibles.push_back(":/images/PaysanEscarte/e0cb2a041352a651cbddd74fdf2f4d3c.jpg");
                 } else if ( metier == Metier::DRESSEUR) {
                     ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/cd21916507e3686221e60deb6a581db6.jpg");
+                } else if (metier == Metier::BUCHERON) {
+                    ToutesLesImagesPossibles.push_back(":/images/Bucheron/141ed218d3a6b84f2097d6e56ab2ee21.jpg");
+                    if ( age < 55 ) /* jeune bûcheron */ {
+                        ToutesLesImagesPossibles.push_back(":/images/Bucheron/2a214e6b0ea6f060d455dced808fb944.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Bucheron/59dbd491980adcdc090fd342e2604841.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Bucheron/913f1bcdd0955d8085068559070f3ff1.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Bucheron/d87f716cc804b26c19c43c32b77a28a1.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Bucheron/df4d05203600dda7468058461e1c9b73.jpg");
+
+                    } else /* vieux bûcheron*/ {
+                        ToutesLesImagesPossibles.push_back(":/images/Bucheron/9b90a8eed0d1c6d6a4d2a177ef4a4e08.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Bucheron/gettyimages-587492308-1024x1024.jpg");
+                    }
                 }
                 if ( age > 40 ) {
                     if ( age < 70 ){
@@ -462,7 +475,7 @@ void DeterminerImageDepuisCaracs(QString sexe, int age, QString metier, QString 
             }
         }
 
-        if ( peuple == Peuple::PEUPLES[0] || peuple == Peuple::PEUPLES[1]) // Saabi ou Shiradim
+        if ( peuple == Peuple::SAABI || peuple == Peuple::SHIRADIM) // Saabi ou Shiradim
         {
             if ( Metier::EstGuerrier(metier)) {// guerriers :
                 ToutesLesImagesPossibles.push_back(":/images/Saabi1/647409fff9c8dfc7255aa03400951431.jpg");
@@ -490,8 +503,15 @@ void DeterminerImageDepuisCaracs(QString sexe, int age, QString metier, QString 
                         ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/04-buquet-fig-4-falconer-VA.jpg");
                     }
                 }
+            } else if ( metier == Metier::BUCHERON) {
+                if ( age > 19 ) {
+                    if ( age < 45 ){
+                        ToutesLesImagesPossibles.push_back(":/images/Bucheron/61M5-2IyGNL._SX384_BO1,204,203,200_.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Bucheron/maxresdefault.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Bucheron/x1080.jpg");
+                    }
+                }
             }
-
 
             if ( age > 16) {
                 if ( metier == Metier::NOMADE) {
@@ -747,7 +767,7 @@ void DeterminerImageDepuisCaracs(QString sexe, int age, QString metier, QString 
         }
     }
 
-    ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/d489410f69ac935fb57a9d21b5256baa.jpg");
+
 
 
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();

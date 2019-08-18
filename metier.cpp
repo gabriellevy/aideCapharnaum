@@ -51,6 +51,7 @@ QString Metier::PAYSAN = "Paysan";
 QString Metier::ARCHER = "Archer";
 QString Metier::VAGABOND = "Vagabond";
 QString Metier::DRESSEUR = "Dresseur/palefrenier";
+QString Metier::BUCHERON = "Bûcheron";
 QString Metier::VOLEUR = "Voleur";
 QString Metier::ESPION = "Espion";
 QString Metier::BANDIT = "bandit";
@@ -104,7 +105,7 @@ QList<QString> Metier::METIERS = {
     "Diplomate",
     "Artisan",
     Metier::PAYSAN,
-    "bûcheron",
+    Metier::BUCHERON,
     "mineur",
     Metier::CHASSEUR,
     Metier::ELEVEUR,
