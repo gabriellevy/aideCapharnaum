@@ -2,6 +2,7 @@
 #include <chrono>
 #include <random>
 #include "sexe.h"
+#include <QDebug>
 
 Peuple::Peuple(QString id, QString sousGroupe):m_Peuple(id), m_SousGroupe(sousGroupe)
 {
@@ -9,8 +10,10 @@ Peuple::Peuple(QString id, QString sousGroupe):m_Peuple(id), m_SousGroupe(sousGr
         if ( id == Peuple::ESCARTE) {
             unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
             std::default_random_engine generator(seed);
-            std::uniform_int_distribution<int> distribution(0, 6);
-            switch(distribution(generator)) {
+            std::uniform_int_distribution<int> distribution(0, 5);
+            int val  = distribution(generator);
+            qDebug() << " int sous groupe escarte : " << val << endl;
+            switch(val) {
                 case 0 :case 1 :case 2 :case 3 : this->m_SousGroupe =Peuple::OCCIDENTIN; break;
                 case 5 : this->m_SousGroupe =Peuple::DORKADE; break;
                 case 4 : this->m_SousGroupe =Peuple::ARAGON; break;
@@ -370,10 +373,117 @@ QVector<QString> Peuple::NOMS_ARAGON = {
     "Acosta", "Acuña", "Adalbéron"
 };
 QVector<QString> Peuple::PRENOMS_ARAGON_FEMELLES = {
-    "Gabriella"
+    "Gabriella", "Adalia",	"Abi",	"Abril",	"Adamaris",
+    "Adelma",	"Agostina",	"Agueda",	"Aidée",
+    "Ailen",	"Alcira",	"Aldana",	"Alejandra",
+    "Alfonsina",	"Almudena",	"Alondra",	"Ambar",
+    "America",	"Amparo",	"Anaeli",	"Analia",
+    "Analis",	"Angeles",	"Antonieta",	"Araceli",
+    "Arantza",	"Aranza",	"Arcelia",	"Arellys",
+    "Ariadna",	"Ariana",	"Arianne",	"Aroa",
+    "Ayelen",	"Aylen",	"Azucena",	"Azul",
+    "Asunción",  	"Asun",  	"Ascensión",  	"Amarilis",
+    "Amaranta",  	"Adoración",  	"Aracelis",  	"Aracely",
+    "Anunciación",  	"Angelita",  	"Amada",  	"Alita",
+    "Adora",  	"Adelita",  	"Azeneth",  	"Amaya",
+    "Amy",	"Amadéa",	"Alanis",	"Aïsha",
+    "Agnès",	"Agustina",	"Andréa",	"Adelaïda",
+    "Alicia",	"Alison",	"Alexa",	"Alexandra",
+    "Alexia",	"Aglaé",	"Aura",	"Arantxa",
+    "Ana",	"Anabel",	"Anabella",
+    "Ana-Maria",	"Ana-Laura",	"Ana-Clara",	"Ana-Luisa",
+    "Ambrosia",	"Ariel",	"Angalina",
+    "Adela",	"Adelina",	"Aline",	"Amaranthe",
+    "Ainhoa",	"Afra",	"Avelina", "Benilda",	"Betiana",	"Betina",	"Betsabe",
+    "Briseyda",	"Benigna",  	"Bernardita",
+    "Bethania",  	"Bienvenida",  	"Brunilda",  	"Brunella",	"Benita",	"Bertha",	"Blanca",
+    "Blanca-Estèla",	"Bella",	"Beatriz",	"Begoña",
+    "Brenda",	"Belen", "Candela",	"Candelaria",	"Caridad",	"Carlina",
+    "Carlota",	"Catalia",	"Celene",	"Charo",
+    "Chita",	"Concepcion",	"Conception",	"Conchita",
+    "Cintia",	"Circe",	"Citlalli",	"Claudina",
+    "Calixta",  	"Cande",  	"Candelas",  	"Carmelita",
+    "Celestina",  	"Chelo",  	"Chus",  	"Concha",
+    "Consuela",	"Crescencia",  	"Cruzita",  	"Custodia",
+    "Célia",	"Carmina",	"Coral",	"Constanza",
+    "Carolin",	"Clarisa",	"Chiara-Maria",
+    "Corina",	"Cloé",	"Célina",
+    "Carina",	"Catalina",	"Catherine",	"Casandra", "Dalma",	"Damaris",	"Darlyne",	"Deidamia",
+    "Delicia",	"Denisse",	"Dilcia",
+    "Dilean",	"Dinora",	"Dominga",	"Domitila",
+    "Dina",	"Danaé",	"Désirée",	"Dana",
+    "Dania",	"Dulce",	"Delta",	"Doïna",
+    "Dominica",	"Dominico",	"Daina", 	"Edelmira",	"Edilma",	"Eduina",
+    "Elba",	"Elcira",	"Elenor",	"Elida",
+    "Elinathan",	"Eloisa",	"Elva",
+    "Emilce",	"Encarnacion",	"Enriqueta",	"Ercilia",
+    "Erlinda",	"Esneda",	"Etelvina",	"Evangelina",
+    "Evelia",	"Elodia",  	"Emelina",  	"Emigdia",
+    "Emperatriz",  	"Encarna",  	"Encarnita",  	"Eléonor",
+    "Estefania",	"Emanuella",	"Elena-Ofelia",
+    "Esther",	"Estèla",	"Estrella",	"Ethel",
+    "Elvia",	"Erika",	"Eda",	"Enid",
+    "Ernestina",	"Esperanza",	"Ermanda",	"Emilia",
+    "Edna",	"Ema",    "Eve",	"Evita", "Felicidad",	"Farina",	"Felicitas",	"Felipa",
+    "Felisa",	"Fiama",	"Filis",	"Fina",
+    "Florentina",	"Francisca",	"Feliciana",  	"Fran",
+    "Fernanda",	"Fiona",	"Florencia",	"Félicia",
+    "Fidelia",	"Fidelina",	"Fidela",	"Fania", "Genovea",	"Geraldina",	"Gimena",	"Ginna",
+    "Gintare",	"Glorymar",	"Goretti",	"Graciela",
+    "Grecia",	"Grisel",	"Griselda",	"Guadalupe",
+    "Guillermina",	"Garsea",  	"Graciana",  	"Gala",
+    "Gina",	"Giulianna",	"Galia",	"Gilberta",
+    "Gil",	"Giselle",	"Gisel",	"Gisela",
+    "Giselda",	"Gisell",	"Gabriela",	"Grace",
+    "Gracia",	"Georgina",	"Gertrudis", "Gretel",	"Gladys",	"Glenda"
 };
 QVector<QString> Peuple::PRENOMS_ARAGON_MALES = {
-    "Rodigo"
+    "Rodigo", 	"Adis",	"Albertino",	"Alcidès",
+    "Alioth",	"Alirio",	"Alterio",	"Anyelo",
+    "Arcadio",	"Arcangel",	"Arles",	"Alfie",
+    "Agapito",  	"Ari",	"Aureliano",  	"Amancio",
+    "Ambrosio",  	"Américo",  	"Adolfito",  	"Alejo",
+    "Amado",  	"Apolinar",  	"Asdrubal",  	"Alonso",
+    "Arsenio",  	"Audie",	"Anibal",	"Arnold",
+    "Albano",	"Agustin", 	"Andréas",	"Andrès",
+    "Alexis",	"Alejandro",	"Alex",	"Adam",
+    "Adan",	"Alvaro",	"Adriel",	"Aristides",
+    "Angel",	"Absalon",	"Axel",
+    "Adonis",	"Abelardo", "Bélisario",	"Blumaro",	"Borris",
+    "Baldomero",	"Bolívar",  	"Baudelio",
+    "Bautista",	"Bartolomé",  	"Blas",	"Buenaventura",
+    "Bernardo",	"Baltasar",	"Baltazar",	"Bernabe", "Clotario",	"Crissolorio",	"Curro",  	"Carlito",
+    "Carlitos",  	"Chuy",  	"Chimo",  	"Chester",
+    "Che",  	"Candelario",  	"Custodio",
+    "Calixto",	"Chucho",  	"Cayetano",	"Clímaco",
+    "Conrado",	"Cebrián",  	"Ceferino",	"Ciríaco",
+    "Celestino",  	"Cecilio",  	"Casimiro",  	"Cruz",
+    "Constantino",	"Cornelio",	"Carol",	"Carlos",
+    "Camilo",	"Cristian",	"Cristobal",	"Christoph",
+    "Cipriano",	"Cirilo",	"César", "Dago",	"Dagoberto",	"Dalmacio",	"Dalmiro",
+    "Donaldo",	"Desi",	"Didacus",
+    "Diogenes",	"Dimas",	"Delfin",
+    "Diogène",	"Daniel",	"Damian",	"Dennis",
+    "Dérek",	"Dan",	"Donovan",	"Domingo",
+    "Duncan", "Edagar",	"Edelberto",	"Edin",	"Eras",	"Euclido",	"Ever",
+    "Epifanio",  	"Eleuterio",  	"Eustaquio",  	"Ezequiel",
+    "Edelmiro",  	"Emigdio",  	"Efrain",	"Eutimio",
+    "Eutropio",  	"Eberardo",	"Espiridión", 	"Estavan",
+    "Esteban",	"Ezéchiel",	"Emanuel",	"Eduardo",	"Eduard",
+    "Ewen",	"Edgar",	"Eléazar",	"Elias",
+    "Eli",	"Elian",	"Enrique",	"Enzo",
+    "Elviro",	"Eric",	"Elmer",	"Eladio",
+    "Edmundo", "Fernan",	"Facundo",	"Fantino",	"Fito",
+    "Felipe",	"Florentino",  	"Fulgencio",  	"Fabricio",
+    "Fermin",	"Fabian",	"Florencio",	"Félix",
+    "Faustin",	"Faustino",	"Fidel",	"Francisco",
+    "Faride", "Galeno",	"Genaro",	"Gerson",	"Giano",
+    "Gildardo",	"Gilmer",	"Goar",	"Gaspare",	"Gasparo",	"Gervasio",
+    "Godofredo",	"Graciano",	"Goyo",  	"Gabino",
+    "Galo",  	"Gualterio",	"Gaston",	"German",
+    "Gabriel",	"Gaspard",	"Gaspar",	"Georges",
+    "Gérard",	"Gerhard",	"Geraldo",	"Gonzalo",
+    "Guillermo",	"Gideon",	"Gadiel"
 };
 
 QVector<QString> Peuple::NOMS_OCCIDENTIN = {

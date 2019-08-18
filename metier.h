@@ -46,6 +46,7 @@ public:
     static QString VAGABOND;
     static QString DRESSEUR;
     static QString BUCHERON;
+    static QString PECHEUR;
     static QString VOLEUR;
     static QString ESPION;
     static QString BANDIT;

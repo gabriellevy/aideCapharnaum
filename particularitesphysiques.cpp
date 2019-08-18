@@ -12,10 +12,10 @@ ParticularitesPhysiques::ParticularitesPhysiques()
 {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine generator(seed);
-    std::uniform_int_distribution<int> distribution6(0, 6);
+    std::uniform_int_distribution<int> distribution6(1, 6);
     int val = distribution6(generator);
 
-    std::uniform_int_distribution<int> distributionPartic(0, ParticularitesPhysiques::PARTICULARITES.size());
+    std::uniform_int_distribution<int> distributionPartic(0, ParticularitesPhysiques::PARTICULARITES.size() - 1);
 
     m_Particularites = {};
     val -= 4;

@@ -118,13 +118,11 @@ Effet* GenHistGenPnj::GenererEffetSelectionNationEscarte()
     }
 
     return effet;
-
 }
-
 
 Effet* GenHistGenPnj::GenererEffetSelectionMetier()
 {
-    Effet* effet = m_GenerateurEvt->AjouterEffetNarration("Quel est le métier de votre pnj ?");
+    Effet* effet = m_GenerateurEvt->AjouterEffetNarration("Quel est le métier de votre pnj ?", "", "EffetSelectionMetier");
 
     Metier metieAll(Metier::MetierAleatoire());
 
@@ -157,7 +155,6 @@ Effet* GenHistGenPnj::GenererEffetSelectionMetier()
 
     return effet;
 }
-
 
 Effet* GenHistGenPnj::GenererEffetSelectionAge()
 {
@@ -235,6 +232,8 @@ void DeterminerTailleDepuisCaracs(QString sexe, int age, QString metier, QString
             } else {
                 taille = 175 + distribution(generator);
             }
+        } else {
+            qDebug() << "Pas de sous groupe escarte pour la taille !"<<endl;
         }
     } else if ( peuple == Peuple::AGALANTHEEN || peuple == Peuple::ALFARIQN) {
         if ( sexe == Sexe::MALE) {
@@ -475,7 +474,7 @@ void DeterminerImageDepuisCaracs(QString sexe, int age, QString metier, QString 
             }
         }
 
-        if ( peuple == Peuple::SAABI || peuple == Peuple::SHIRADIM) // Saabi ou Shiradim
+        if ( peuple == Peuple::SAABI || peuple == Peuple::SHIRADIM) /* Saabi ou Shiradim */
         {
             if ( Metier::EstGuerrier(metier)) {// guerriers :
                 ToutesLesImagesPossibles.push_back(":/images/Saabi1/647409fff9c8dfc7255aa03400951431.jpg");
@@ -511,6 +510,18 @@ void DeterminerImageDepuisCaracs(QString sexe, int age, QString metier, QString 
                         ToutesLesImagesPossibles.push_back(":/images/Bucheron/x1080.jpg");
                     }
                 }
+            } else if ( metier == Metier::PECHEUR) {
+                if ( age > 25 ) {
+                    ToutesLesImagesPossibles.push_back(":/images/Pecheur/782ff0b44367bb0d97f4ad6f633a74b4.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Pecheur/adce2582dc9cd1d680002c445271d613.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Pecheur/b5932af55bae132f6b2b78cb3d15436b.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Pecheur/b70800b26c552845c836413800e62791.jpg");
+                    if ( age > 50) {
+                        ToutesLesImagesPossibles.push_back(":/images/Pecheur/5707708c7134c2b609d15d1f9abaaced.jpg");
+                        ToutesLesImagesPossibles.push_back(":/images/Pecheur/81c98394f6e069f2fb8805238dea6390.jpg");
+
+                    }
+                }
             }
 
             if ( age > 16) {
@@ -529,6 +540,7 @@ void DeterminerImageDepuisCaracs(QString sexe, int age, QString metier, QString 
                             ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/14e09bb348846084369766ac7c371a7e.jpg");
                         }
                     } else if ( Metier::EstGuerrier(metier)) {
+                        ToutesLesImagesPossibles.push_back(":/images/Saabi1/13f0593d85c231948f3fc2ff8616f1db.jpg");
                         ToutesLesImagesPossibles.push_back(":/images/Saabi1/483147199532bfddaf94951e54a19485.jpg");
                         ToutesLesImagesPossibles.push_back(":/images/Saabi1/4ceae394a058429745eb1da0280c75a8.jpg");
                     }
@@ -543,7 +555,6 @@ void DeterminerImageDepuisCaracs(QString sexe, int age, QString metier, QString 
                         ToutesLesImagesPossibles.push_back(":/images/Saabi1/08729210ba1b31c5b6ea2846994bdd5b.jpg");
                         ToutesLesImagesPossibles.push_back(":/images/Saabi1/0d22007cb3d8ca277746a367fd384424.jpg");
                         ToutesLesImagesPossibles.push_back(":/images/Saabi1/11f2e20d7e38986df1719aab46318667.jpg");
-                        ToutesLesImagesPossibles.push_back(":/images/Saabi1/13f0593d85c231948f3fc2ff8616f1db.jpg");
                         if ( metier == Metier::MARCHAND) {
                             ToutesLesImagesPossibles.push_back(":/images/Saabi1/d3f40f2f4362c362935cd54534b836a5.jpg");
                         }
@@ -767,8 +778,7 @@ void DeterminerImageDepuisCaracs(QString sexe, int age, QString metier, QString 
         }
     }
 
-
-
+    ToutesLesImagesPossibles.push_back(":/images/Pecheur/5707708c7134c2b609d15d1f9abaaced.jpg");
 
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine generator(seed);
@@ -822,4 +832,8 @@ void GenHistGenPnj::GenererEvtsAccueil()
     m_GenerateurEvt->AjouterEffetCallbackDisplay(
                 FinaliserPerso,
                 "Choix terminé", "", "FinGeneration" );
+
+    Effet* effetRetourDebut = m_GenerateurEvt->AjouterEffetVide();
+    effetRetourDebut->m_Id = "effetRetourDebut";
+    effetRetourDebut->m_GoToEffetId = "EffetSelectionMetier";
 }

@@ -20,7 +20,7 @@ ParticularitesPsy::ParticularitesPsy()
     std::uniform_int_distribution<int> distribution6(0, 6);
     int val = distribution6(generator);
 
-    std::uniform_int_distribution<int> distributionPartic(0, ParticularitesPsy::PARTICULARITES.size());
+    std::uniform_int_distribution<int> distributionPartic(0, ParticularitesPsy::PARTICULARITES.size() - 1);
 
     m_Particularites = {};
     val -= 4;
