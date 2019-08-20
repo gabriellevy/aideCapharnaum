@@ -12,7 +12,6 @@ Peuple::Peuple(QString id, QString sousGroupe):m_Peuple(id), m_SousGroupe(sousGr
             std::default_random_engine generator(seed);
             std::uniform_int_distribution<int> distribution(0, 5);
             int val  = distribution(generator);
-            qDebug() << " int sous groupe escarte : " << val << endl;
             switch(val) {
                 case 0 :case 1 :case 2 :case 3 : this->m_SousGroupe =Peuple::OCCIDENTIN; break;
                 case 5 : this->m_SousGroupe =Peuple::DORKADE; break;
@@ -891,7 +890,18 @@ QVector<QString> Peuple::PRENOMS_SAABI_MALES = {
     "Bakir", "Baligh", "Bara'", "Bassem", "Bayrem", "Belkacem", "Bilal", "Borhene", "Boualem", "Boubakar", "Boubakr", "Boulbaba",
     "Boulbaba", "Brahim", "Chamseddine", "Chaabane", "Chadli", "Chahid", "Chafik", "Chakib", "Charafeddine", "Charif", "Choukri",
     "Chiheb", "Ciel", "Daoud", "Dalil", "Diyaeddine", "Dayazell", "Djamel", "Jebril", "Driss", "Dine", "Dom", "Djemaa", "Djibril",
-    "Djillali", "Dib", "Djawad", "Djaouad", "Dayâan", "Daoud"
+    "Djillali", "Dib", "Djawad", "Djaouad", "Dayâan", "Daoud", "Essa",  	"Elijah",	"Elyas",	"Elyes", "Emir", "Fazl",  	"Firdaus",  	"Faysal",  	"Fadl",
+    "Fakhri",  	"Fikri",  	"Faris",  	"Faruq",
+    "Faraj",  	"Fihr",  	"Fayiz",  	"Faiz",
+    "Fadil",  	"Farag",  	"Fareed",  	"Farooq",
+    "Faizel",  	"Firdos",  	"Faruk",	"Farès",
+    "Fahim",	"Fouad",	"Farouk",	"Fahmi",
+    "Fouad",	"Fouad",	"Foued",	"Faudel",
+    "Ferhat",	"Fahd",	"Fayçal",	"Fawzi",
+    "Faouzi",	"Fadi",	"Fadel",	"Farid", "Fatih", "Ghayth",  	"Ghassan",  	"Gabir",  	"Gabr",
+    "Gafar",  	"Galal",  	"Gamil",  	"Gawdat",
+    "Guda",  	"Gebril",	"Ghani",	"Ghanem",
+    "Ghazi",	"Ghalib"
 };
 QVector<QString> Peuple::PRENOMS_SAABI_FEMELLES = {
     "Atiqua", "Abir", "Abla", "Afaf", "Ahida", "Ahlam", "Aïcha", "Alia", "Alma", "Alya", "Amal", "Amina",
@@ -899,7 +909,19 @@ QVector<QString> Peuple::PRENOMS_SAABI_FEMELLES = {
     "Atiqua", "Aya", "Aziza", "Azza", "Badra", "Bahia", "Bahija", "Balkis", "Basma", "Baya", "Bayan", "Beha", "Beya",
     "Bouchra", "Bouthaïna", "Shemsa", "Camilla", "Camélia", "Célia", "Chahida", "Chahla", "Chama", "Chafika", "Chaïnez",
     "Cherine", "Chérifa", "Cirine", "Dalal", "Dalya", "Diyaa", "Dalila", "Donia", "Dounia", "Dino", "Djihane", "Djouhara",
-    "Djaouida", "Dina", "Dhekra"
+    "Djaouida", "Dina", "Dhekra", "Emna",	"Emine",	"Esra",	"Esma", "Fairuz",  	"Fakhriyya",  	"Fariha",  	"Farrah",
+    "Fathiyya",  	"Fatimah",  	"Fatin",  	"Fawziya",
+    "Fawziyya",  	"Fayruz",  	"Fayza",  	"Fidda",
+    "Fikriyya",  	"Fizza",  	"Feryel",	"Fathia",
+    "Fouzia",	"Farah",	"Fadoua",	"Fadwa",
+    "Faten",	"Fitna",	"Fadila",	"Faroudja",
+    "Fahmia",	"Fella",	"Fahima",	"Fattouma",
+    "Fairouz",	"Fatou",	"Fatoumata",	"Fatima",
+    "Fatma",	"Fouzia",	"Fouzia",	"Fadia",
+    "Farida",	"Faïza",	"Fatiha", "Galila",  	"Gamal",  	"Gamila",  	"Gathbiyya",
+    "Gauhar",  	"Gawahir",  	"Gazbiyya",  	"Ghadir",
+    "Ghaliya", 	"Ghufran",  	"Ghada",	"Ghizlène",
+    "Ghania",	"Garmia",	"Ghalia"
 };
 
 Peuple Peuple::AleatoireCapharnaum()

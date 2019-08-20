@@ -255,6 +255,44 @@ void DeterminerImageDepuisCaracs(QString sexe, int age, QString metier, QString 
         // tous les peuples
         if ( Metier::EstMalandrin(metier)) {
             ToutesLesImagesPossibles.push_back(":/images/DresseurSaabi/d489410f69ac935fb57a9d21b5256baa.jpg");
+        } else if ( metier == Metier::BATISSEUR && peuple != Peuple::ALFARIQN)/* je ets tous les bâtisseurs ici vu que c'est plus simple d'en trouver du moyen-âge chrétien mais ça pourra changer*/ {
+            if ( age > 24) {
+                if ( peuple == Peuple::SAABI) {
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/b02945f9449da15f9476c1599295fab5.jpg");
+                }
+                if ( age < 60) {
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/01645dcc7f2ff30f0e100e88c0090318.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/1fa106a847492f19545bf0293aa0f826.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/4e422dc328dec1a6e2f7f8bac0e6c8ee.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/8bfef3e252ac16cadeec0b91881d4faf.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/8dc4189e02bd46c7ce56313d157ffa04.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/96f3b68f0f220a087a31f996f9523705.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/9c1cee0c1ab3da840cfd8832bf71a773.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/c4d4acf53b660199b9958a9810363a79.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/d0b7acb7e6eb50c0688f9b72f31be4a0.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/dbad227bbfdbe2706cb88c4e77956103.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/dea5bcec585f74d2ed382a93ba5f5c5e.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/e088bcf1c6904d29e564f2664e45f17d.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/f809c56b91f208b8d28fdbe0861b8c29.jpg");
+
+                } else /* vieux bâtisseur */ {
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/22f8b622e9a2efa8fd177a0d9ac3789d.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/2c017f109c503aaca5e9ec67861eac08.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/65495759a70a13491154372d6c941a75.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/a1d0874f1d12075c31e4549dce124f0d.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/c49e1b8d0b9c0f3086b92f566c5837db.jpg");
+                    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/dce8ff3b4ddd6d3d7b02cd15fa7a3248.jpg");
+
+                }
+
+            } else /* enfant bâtisseur */ {
+                ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/46373aa973ff68578457f235180766d9.jpg");
+                ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/6629bb1e4c6bac34d62d77377fecc01a.jpg");
+                ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/6af65303c4f020188418e6df5d8cb53a.jpg");
+                ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/dd224234571209bbeac2d72a7897384d.jpg");
+                ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/fdff060c91cf28ca5bd3cdbfca8a7b38.jpg");
+
+            }
         }
         if ( age > 20 ) {
             if (age < 50 ) {
@@ -778,7 +816,10 @@ void DeterminerImageDepuisCaracs(QString sexe, int age, QString metier, QString 
         }
     }
 
-    ToutesLesImagesPossibles.push_back(":/images/Pecheur/5707708c7134c2b609d15d1f9abaaced.jpg");
+
+
+
+    ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/fdff060c91cf28ca5bd3cdbfca8a7b38.jpg");
 
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine generator(seed);

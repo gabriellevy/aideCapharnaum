@@ -38,6 +38,7 @@ public:
     static QString DANSEUR;
     static QString ASSASSIN;
     static QString PRETRE;
+    static QString BATISSEUR;
     static QString CIRQUE;
     static QString CHARPENTIER;
     static QString FABRICANT_MEUBLES;
