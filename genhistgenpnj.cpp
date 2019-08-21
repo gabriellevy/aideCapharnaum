@@ -2,8 +2,7 @@
 #include "../destinLib/gestionnairecarac.h"
 #include "universcapharnaum.h"
 #include "pnj.h"
-#include <chrono>
-#include <random>
+#include "../destinLib/aleatoire.h"
 #include "metier.h"
 #include "peuple.h"
 #include "sexe.h"
@@ -26,6 +25,16 @@ Hist* GenHistGenPnj::GenererHistoire()
 
     GenererEvtsAccueil();
 
+    int n = 30; // on génère 30 persos d'affilée
+    while ( n-- > 0 ) {
+        this->GenererBoucleGenerationPersonnage(n);
+    }
+
+    // après 30 persos, si on continue à cliquer "continuer" on revient au tout début où on retombera plus ou moins sur les mêmes résultats
+    /*Effet* effetRetourDebut = m_GenerateurEvt->AjouterEffetVide();
+    effetRetourDebut->m_Id = "effetRetourDebut";
+    effetRetourDebut->m_GoToEffetId = "EffetSelectionMetier";*/
+
     return m_HistoireGeneree;
 }
 
@@ -43,7 +52,7 @@ void GenHistGenPnj::GenererCaracs()
     // initilisée via le perso
 }
 
-Effet* GenHistGenPnj::GenererEffetSelectionPeuple()
+Effet* GenHistGenPnj::GenererEffetSelectionPeuple(int index)
 {
     Effet* effet = m_GenerateurEvt->AjouterEffetNarration("Quel est le peuple de votre pnj ?");
 
@@ -60,7 +69,7 @@ Effet* GenHistGenPnj::GenererEffetSelectionPeuple()
     //sexe aléatoire aussi :
     Sexe SexeAl2;
     choixAleatoireCaph->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_SEXE, SexeAl2.m_Sexe);
-    choixAleatoireCaph->m_GoToEffetId = "FinGeneration";
+    choixAleatoireCaph->m_GoToEffetId = "FinGeneration" + QString::number(index);
 
     Peuple peupleAlCaph(Peuple::AleatoireCapharnaum());
     Choix* choixalCaph = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
@@ -78,9 +87,9 @@ Effet* GenHistGenPnj::GenererEffetSelectionPeuple()
 
         // ajout de choix de sous nation
         if ( peuple.m_Peuple == Peuple::ESCARTE) {
-            choixPeuple->m_GoToEffetId = "ChoixNationEscarte";
+            choixPeuple->m_GoToEffetId = "ChoixNationEscarte" + QString::number(index);
         } else {
-            choixPeuple->m_GoToEffetId = "ChoixSexe";
+            choixPeuple->m_GoToEffetId = "ChoixSexe" + QString::number(index);
         }
     }
 
@@ -88,9 +97,9 @@ Effet* GenHistGenPnj::GenererEffetSelectionPeuple()
 
 }
 
-Effet* GenHistGenPnj::GenererEffetSelectionNationEscarte()
+Effet* GenHistGenPnj::GenererEffetSelectionNationEscarte(int index)
 {
-    Effet* effet = m_GenerateurEvt->AjouterEffetNarration("De quel sous groupe de ce peuple fait partie votre pnj ?", "", "ChoixNationEscarte");
+    Effet* effet = m_GenerateurEvt->AjouterEffetNarration("De quel sous groupe de ce peuple fait partie votre pnj ?", "", "ChoixNationEscarte" + QString::number(index));
 
     // mène direct à la fin de la génération en aléatoire complet :
     Peuple escarteRand2(Peuple::AleatoireEscarte());
@@ -102,7 +111,7 @@ Effet* GenHistGenPnj::GenererEffetSelectionNationEscarte()
     //sexe aléatoire aussi :
     Sexe SexeAl2;
     choixAleatoireCaph->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_SEXE, SexeAl2.m_Sexe);
-    choixAleatoireCaph->m_GoToEffetId = "FinGeneration";
+    choixAleatoireCaph->m_GoToEffetId = "FinGeneration" + QString::number(index);
 
     Peuple escarteRand(Peuple::AleatoireEscarte());
     m_GenerateurEvt->AjouterChoixChangeurDeCarac(
@@ -113,16 +122,16 @@ Effet* GenHistGenPnj::GenererEffetSelectionNationEscarte()
         Choix* choixPeuple = m_GenerateurEvt->AjouterChoixChangeurDeCarac(
                     Peuple::SOUS_GROUPE_ESCARTE[i], UniversCapharnaum::CARAC_SOUS_GROUPE, Peuple::SOUS_GROUPE_ESCARTE[i]);
 
-        choixPeuple->m_GoToEffetId = "ChoixSexe";
+        choixPeuple->m_GoToEffetId = "ChoixSexe" + QString::number(index);
 
     }
 
     return effet;
 }
 
-Effet* GenHistGenPnj::GenererEffetSelectionMetier()
+Effet* GenHistGenPnj::GenererEffetSelectionMetier(int index)
 {
-    Effet* effet = m_GenerateurEvt->AjouterEffetNarration("Quel est le métier de votre pnj ?", "", "EffetSelectionMetier");
+    Effet* effet = m_GenerateurEvt->AjouterEffetNarration("Quel est le métier de votre pnj ?", "", "EffetSelectionMetier" + QString::number(index));
 
     Metier metieAll(Metier::MetierAleatoire());
 
@@ -140,7 +149,7 @@ Effet* GenHistGenPnj::GenererEffetSelectionMetier()
     //sexe aléatoire aussi :
     Sexe SexeAl2;
     choixAleatoireComplet->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_SEXE, SexeAl2.m_Sexe);
-    choixAleatoireComplet->m_GoToEffetId = "FinGeneration";
+    choixAleatoireComplet->m_GoToEffetId = "FinGeneration" + QString::number(index);
 
     m_GenerateurEvt->AjouterChoixChangeurDeCarac(
                  "Aleatoire", UniversCapharnaum::CARAC_METIER, metieAll.m_MetierFInal);
@@ -156,7 +165,7 @@ Effet* GenHistGenPnj::GenererEffetSelectionMetier()
     return effet;
 }
 
-Effet* GenHistGenPnj::GenererEffetSelectionAge()
+Effet* GenHistGenPnj::GenererEffetSelectionAge(int index)
 {
     Effet* effet = m_GenerateurEvt->AjouterEffetNarration("Quel est l'âge de votre pnj ?");
 
@@ -174,9 +183,9 @@ Effet* GenHistGenPnj::GenererEffetSelectionAge()
     return effet;
 }
 
-Effet* GenHistGenPnj::GenererEffetSelectionSexe()
+Effet* GenHistGenPnj::GenererEffetSelectionSexe(int index)
 {
-    Effet* effet = m_GenerateurEvt->AjouterEffetNarration("Quel est le sexe de votre pnj ?", "", "ChoixSexe");
+    Effet* effet = m_GenerateurEvt->AjouterEffetNarration("Quel est le sexe de votre pnj ?", "", "ChoixSexe" + QString::number(index));
 
     // mène direct à la fin de la génération en aléatoire complet :
     Sexe SexeAl2;
@@ -185,7 +194,7 @@ Effet* GenHistGenPnj::GenererEffetSelectionSexe()
     // Age aléatoire aussi
     Age AgeAl2(Age::AgeAleatoire());
     choixAleatoireComplet->AjouterChangeurDeCarac( UniversCapharnaum::CARAC_AGE, QString::number(AgeAl2.m_Age));
-    choixAleatoireComplet->m_GoToEffetId = "FinGeneration";
+    choixAleatoireComplet->m_GoToEffetId = "FinGeneration" + QString::number(index);
 
     Sexe SexeAl;
     m_GenerateurEvt->AjouterChoixChangeurDeCarac(
@@ -202,44 +211,42 @@ Effet* GenHistGenPnj::GenererEffetSelectionSexe()
 
 void DeterminerTailleDepuisCaracs(QString sexe, int age, QString metier, QString peuple, QString sousGroupe)
 {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine generator(seed);
-    std::uniform_int_distribution<int> distribution(0, 20);
+    int val = Aleatoire::GetAl()->EntierInferieurA(21);
     int taille = 0;
 
     if ( peuple == Peuple::SAABI || peuple == Peuple::SHIRADIM) {
         if ( sexe == Sexe::MALE) {
-            taille = 160 + distribution(generator);
+            taille = 160 + val;
         } else {
-            taille = 148 + distribution(generator);
+            taille = 148 + val;
         }
     } else if ( peuple == Peuple::ESCARTE) {
         if ( sousGroupe == Peuple::ARAGON) {
             if ( sexe == Sexe::MALE) {
-                taille = 160 + distribution(generator);
+                taille = 160 + val;
             } else {
-                taille = 149 + distribution(generator);
+                taille = 149 + val;
             }
         } else if ( sousGroupe == Peuple::OCCIDENTIN) {
             if ( sexe == Sexe::MALE) {
-                taille = 164 + distribution(generator);
+                taille = 164 + val;
             } else {
-                taille = 151 + distribution(generator);
+                taille = 151 + val;
             }
         } else if ( sousGroupe == Peuple::DORKADE) {
             if ( sexe == Sexe::MALE) {
-                taille = 185 + distribution(generator);
+                taille = 185 + val;
             } else {
-                taille = 175 + distribution(generator);
+                taille = 175 + val;
             }
         } else {
             qDebug() << "Pas de sous groupe escarte pour la taille !"<<endl;
         }
     } else if ( peuple == Peuple::AGALANTHEEN || peuple == Peuple::ALFARIQN) {
         if ( sexe == Sexe::MALE) {
-            taille = 164 + distribution(generator);
+            taille = 164 + val;
         } else {
-            taille = 151 + distribution(generator);
+            taille = 151 + val;
         }
     }
 
@@ -821,11 +828,9 @@ void DeterminerImageDepuisCaracs(QString sexe, int age, QString metier, QString 
 
     ToutesLesImagesPossibles.push_back(":/images/Bâtisseur/fdff060c91cf28ca5bd3cdbfca8a7b38.jpg");
 
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine generator(seed);
-    std::uniform_int_distribution<int> distribution(0, ToutesLesImagesPossibles.length()-1);
+    int val = Aleatoire::GetAl()->EntierInferieurA(ToutesLesImagesPossibles.length());
 
-    QString portrait = ToutesLesImagesPossibles[ distribution(generator) ];
+    QString portrait = ToutesLesImagesPossibles[val];
 
     Univers::ME->GetExecHistoire()->GetExecEffetActuel(false)->ChargerImage(portrait);
 
@@ -864,17 +869,17 @@ void FinaliserPerso()
 void GenHistGenPnj::GenererEvtsAccueil()
 {
     /*Evt* Debut = */this->AjouterEvt("Debut", "Génération du eprso par les choix");
-    GenererEffetSelectionMetier();
-    GenererEffetSelectionPeuple();
-    GenererEffetSelectionNationEscarte();
-    GenererEffetSelectionSexe();
-    GenererEffetSelectionAge();
+}
+
+void GenHistGenPnj::GenererBoucleGenerationPersonnage(int index)
+{
+    GenererEffetSelectionMetier(index);
+    GenererEffetSelectionPeuple(index);
+    GenererEffetSelectionNationEscarte(index);
+    GenererEffetSelectionSexe(index);
+    GenererEffetSelectionAge(index);
 
     m_GenerateurEvt->AjouterEffetCallbackDisplay(
                 FinaliserPerso,
-                "Choix terminé", "", "FinGeneration" );
-
-    Effet* effetRetourDebut = m_GenerateurEvt->AjouterEffetVide();
-    effetRetourDebut->m_Id = "effetRetourDebut";
-    effetRetourDebut->m_GoToEffetId = "EffetSelectionMetier";
+                "Choix terminé", "", "FinGeneration" + QString::number(index) );
 }

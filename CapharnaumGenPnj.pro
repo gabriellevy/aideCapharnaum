@@ -49,6 +49,7 @@ SOURCES += \
     ../destinLib/reglages.cpp \
     ../destinLib/dbmanager.cpp \
     ../destinLib/gestionnairecarac.cpp \
+    ../destinLib/aleatoire.cpp \
     age.cpp \
     genhistgenpnj.cpp \
         main.cpp \
@@ -86,6 +87,7 @@ HEADERS += \
     ../destinLib/reglages.h \
     ../destinLib/dbmanager.h \
     ../destinLib/gestionnairecarac.h \
+    ../destinLib/aleatoire.h \
     age.h \
     aspectratiolabel.h \
     genhistgenpnj.h \

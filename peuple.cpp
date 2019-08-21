@@ -1,6 +1,5 @@
 #include "peuple.h"
-#include <chrono>
-#include <random>
+#include "../destinLib/aleatoire.h"
 #include "sexe.h"
 #include <QDebug>
 
@@ -8,10 +7,7 @@ Peuple::Peuple(QString id, QString sousGroupe):m_Peuple(id), m_SousGroupe(sousGr
 {
     if ( m_SousGroupe == "") {
         if ( id == Peuple::ESCARTE) {
-            unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-            std::default_random_engine generator(seed);
-            std::uniform_int_distribution<int> distribution(0, 5);
-            int val  = distribution(generator);
+            int val = Aleatoire::GetAl()->EntierInferieurA(6);
             switch(val) {
                 case 0 :case 1 :case 2 :case 3 : this->m_SousGroupe =Peuple::OCCIDENTIN; break;
                 case 5 : this->m_SousGroupe =Peuple::DORKADE; break;
@@ -46,54 +42,49 @@ QList<QString> Peuple::SOUS_GROUPE_ESCARTE = {
 
 QString Peuple::GenererNom(QString peuple, QString sexe, QString sousensemble)
 {
-    // construct a trivial random generator engine from a time-based seed:
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine generator(seed);
-    std::uniform_int_distribution<int> distribution(0, 99999999999999999);
-
     if ( peuple == Peuple::SHIRADIM) {
 
         if ( sexe == Sexe::MALE) {
-            QString nomTotal = Peuple::PRENOMS_SHIRADIM_MALES[distribution(generator) % Peuple::PRENOMS_SHIRADIM_MALES.length()] + " ";
-            if(distribution(generator)%4 == 0) {
+            QString nomTotal = Peuple::PRENOMS_SHIRADIM_MALES[Aleatoire::GetAl()->EntierInferieurA(Peuple::PRENOMS_SHIRADIM_MALES.length())] + " ";
+            if(Aleatoire::GetAl()->EntierInferieurA(4) == 0) {
                 // fille de [mère] => quand le père est inconnu, que l'enfant est un batard etc
-                nomTotal += "Bat " + Peuple::PRENOMS_SHIRADIM_FEMELLES[distribution(generator) % Peuple::PRENOMS_SHIRADIM_FEMELLES.length()];
+                nomTotal += "Bat " + Peuple::PRENOMS_SHIRADIM_FEMELLES[Aleatoire::GetAl()->EntierInferieurA(Peuple::PRENOMS_SHIRADIM_FEMELLES.length())];
             } else {
-                nomTotal += "Bar " + Peuple::PRENOMS_SHIRADIM_MALES[distribution(generator) % Peuple::PRENOMS_SHIRADIM_MALES.length()];
+                nomTotal += "Bar " + Peuple::PRENOMS_SHIRADIM_MALES[Aleatoire::GetAl()->EntierInferieurA(Peuple::PRENOMS_SHIRADIM_MALES.length())];
             }
             return nomTotal;
         } else {
-            QString nomFem = Peuple::PRENOMS_SHIRADIM_FEMELLES[distribution(generator) % Peuple::PRENOMS_SHIRADIM_FEMELLES.length()] + " ";
-            if(distribution(generator)%4 == 0) {
+            QString nomFem = Peuple::PRENOMS_SHIRADIM_FEMELLES[Aleatoire::GetAl()->EntierInferieurA(Peuple::PRENOMS_SHIRADIM_FEMELLES.length())] + " ";
+            if(Aleatoire::GetAl()->EntierInferieurA(4) == 0) {
                 // fille de [mère] => quand le père est inconnu, que l'enfant est un batard etc
-                nomFem += "Bat " + Peuple::PRENOMS_SHIRADIM_FEMELLES[distribution(generator) % Peuple::PRENOMS_SHIRADIM_FEMELLES.length()];
+                nomFem += "Bat " + Peuple::PRENOMS_SHIRADIM_FEMELLES[Aleatoire::GetAl()->EntierInferieurA(Peuple::PRENOMS_SHIRADIM_FEMELLES.length())];
             } else {
-                nomFem += "Bar " + Peuple::PRENOMS_SHIRADIM_MALES[distribution(generator) % Peuple::PRENOMS_SHIRADIM_MALES.length()];
+                nomFem += "Bar " + Peuple::PRENOMS_SHIRADIM_MALES[Aleatoire::GetAl()->EntierInferieurA(Peuple::PRENOMS_SHIRADIM_MALES.length())];
             }
             return nomFem;
         }
     } else if ( peuple == Peuple::SAABI) {
 
         if ( sexe == Sexe::MALE) {
-            QString nomTotal = Peuple::PRENOMS_SAABI_MALES[distribution(generator) % Peuple::PRENOMS_SAABI_MALES.length()] + " ";
-            if(distribution(generator)%2 == 0) {
-                nomTotal += Peuple::NOMS_SAABI[distribution(generator) % Peuple::NOMS_SAABI.length()];
+            QString nomTotal = Peuple::PRENOMS_SAABI_MALES[Aleatoire::GetAl()->EntierInferieurA(Peuple::PRENOMS_SAABI_MALES.length())] + " ";
+            if(Aleatoire::GetAl()->EntierInferieurA(2) == 0) {
+                nomTotal += Peuple::NOMS_SAABI[Aleatoire::GetAl()->EntierInferieurA(Peuple::NOMS_SAABI.length())];
             } else {
-                nomTotal += "Ibn " + Peuple::PRENOMS_SAABI_MALES[distribution(generator) % Peuple::PRENOMS_SAABI_MALES.length()];
+                nomTotal += "Ibn " + Peuple::PRENOMS_SAABI_MALES[Aleatoire::GetAl()->EntierInferieurA(Peuple::PRENOMS_SAABI_MALES.length())];
             }
             return nomTotal;
         } else {
-            QString nomFem = Peuple::PRENOMS_SAABI_FEMELLES[distribution(generator) % Peuple::PRENOMS_SAABI_FEMELLES.length()] + " ";
-            if(distribution(generator)%2 == 0) {
-                nomFem += Peuple::NOMS_SAABI[distribution(generator) % Peuple::NOMS_SAABI.length()];
+            QString nomFem = Peuple::PRENOMS_SAABI_FEMELLES[Aleatoire::GetAl()->EntierInferieurA(Peuple::PRENOMS_SAABI_FEMELLES.length())] + " ";
+            if(Aleatoire::GetAl()->EntierInferieurA(2) == 0) {
+                nomFem += Peuple::NOMS_SAABI[Aleatoire::GetAl()->EntierInferieurA(Peuple::NOMS_SAABI.length())];
             } else {
-                nomFem += "Bint " + Peuple::PRENOMS_SAABI_FEMELLES[distribution(generator) % Peuple::PRENOMS_SAABI_FEMELLES.length()];
+                nomFem += "Bint " + Peuple::PRENOMS_SAABI_FEMELLES[Aleatoire::GetAl()->EntierInferieurA(Peuple::PRENOMS_SAABI_FEMELLES.length())];
             }
             return nomFem;
         }
     } else if ( peuple == Peuple::ESCARTE ) {
         if ( sousensemble == "") {
-            switch(distribution(generator) % 3) {
+            switch(Aleatoire::GetAl()->EntierInferieurA(3)) {
             case 0 : sousensemble=Peuple::OCCIDENTIN; break;
             case 1 : sousensemble=Peuple::DORKADE; break;
             case 2 : sousensemble=Peuple::ARAGON; break;
@@ -101,22 +92,22 @@ QString Peuple::GenererNom(QString peuple, QString sexe, QString sousensemble)
         }
         if ( sousensemble == Peuple::OCCIDENTIN) {
             return ( (sexe == Sexe::MALE) ?
-                     Peuple::PRENOMS_OCCIDENTIN_MALES[distribution(generator) % Peuple::PRENOMS_OCCIDENTIN_MALES.length()] :
-                     Peuple::PRENOMS_OCCIDENTIN_FEMELLES[distribution(generator) % Peuple::PRENOMS_OCCIDENTIN_FEMELLES.length()] )
+                     Peuple::PRENOMS_OCCIDENTIN_MALES[Aleatoire::GetAl()->EntierInferieurA(Peuple::PRENOMS_OCCIDENTIN_MALES.length())] :
+                     Peuple::PRENOMS_OCCIDENTIN_FEMELLES[Aleatoire::GetAl()->EntierInferieurA(Peuple::PRENOMS_OCCIDENTIN_FEMELLES.length())] )
                     + " " +
-                    Peuple::NOMS_OCCIDENTIN[distribution(generator) % Peuple::NOMS_OCCIDENTIN.length()];
+                    Peuple::NOMS_OCCIDENTIN[Aleatoire::GetAl()->EntierInferieurA(Peuple::NOMS_OCCIDENTIN.length())];
         } else if (sousensemble == Peuple::ARAGON) {
             return ( (sexe == Sexe::MALE) ?
-                     Peuple::PRENOMS_ARAGON_MALES[distribution(generator) % Peuple::PRENOMS_ARAGON_MALES.length()] :
-                     Peuple::PRENOMS_ARAGON_FEMELLES[distribution(generator) % Peuple::PRENOMS_ARAGON_FEMELLES.length()] )
+                     Peuple::PRENOMS_ARAGON_MALES[Aleatoire::GetAl()->EntierInferieurA(Peuple::PRENOMS_ARAGON_MALES.length())] :
+                     Peuple::PRENOMS_ARAGON_FEMELLES[Aleatoire::GetAl()->EntierInferieurA(Peuple::PRENOMS_ARAGON_FEMELLES.length())] )
                     + " " +
-                    Peuple::NOMS_ARAGON[distribution(generator) % Peuple::NOMS_ARAGON.length()];
+                    Peuple::NOMS_ARAGON[Aleatoire::GetAl()->EntierInferieurA(Peuple::NOMS_ARAGON.length())];
         } else if (sousensemble == Peuple::DORKADE) {
             return ( (sexe == Sexe::MALE) ?
-                     Peuple::PRENOMS_DORKADE_MALES[distribution(generator) % Peuple::PRENOMS_DORKADE_MALES.length()] :
-                     Peuple::PRENOMS_DORKADE_FEMELLES[distribution(generator) % Peuple::PRENOMS_DORKADE_FEMELLES.length()] )
+                     Peuple::PRENOMS_DORKADE_MALES[Aleatoire::GetAl()->EntierInferieurA(Peuple::PRENOMS_DORKADE_MALES.length())] :
+                     Peuple::PRENOMS_DORKADE_FEMELLES[Aleatoire::GetAl()->EntierInferieurA(Peuple::PRENOMS_DORKADE_FEMELLES.length())] )
                     + " " +
-                    Peuple::NOMS_DORKADE[distribution(generator) % Peuple::NOMS_DORKADE.length()];
+                    Peuple::NOMS_DORKADE[Aleatoire::GetAl()->EntierInferieurA(Peuple::NOMS_DORKADE.length())];
         }
     }
 
@@ -901,7 +892,31 @@ QVector<QString> Peuple::PRENOMS_SAABI_MALES = {
     "Faouzi",	"Fadi",	"Fadel",	"Farid", "Fatih", "Ghayth",  	"Ghassan",  	"Gabir",  	"Gabr",
     "Gafar",  	"Galal",  	"Gamil",  	"Gawdat",
     "Guda",  	"Gebril",	"Ghani",	"Ghanem",
-    "Ghazi",	"Ghalib"
+    "Ghazi",	"Ghalib", "Husni",  	"Husayn",  	"Hashim", 	"Hafiz",
+    "Hasim",  	"Harith",  	"Hasib",  	"Husam",
+    "Hanif",  	"Haytham",  	"Hafeez",  	"Hayder",
+    "Hyder",  	"Hakeem",  	"Hameed",  	"Hesham",
+    "Houssam",  	"Hisein",  	"Husain",  	"Hussain",
+    "Hussein",  	"Haroun",	"Habib",	"Hasan",
+    "Hassan",	"Haider",	"Hassen",	"Huseyin",
+    "Hamdane",	"Hicham",	"Hichem",	"Hali",
+    "Houari",	"Hamid",	"Hocine",	"Houcine",
+    "Hachem",	"Hadi",	"Hani",	"Hatim",
+    "Hafs",	"Hadj",	"Hamdi",	"Hafid",
+    "Hamza",	"Hakim",	"Hèdi",	"Hikme",
+    "Hosni", "Ilyas",  	"Isa",  	"Imtiyaz",  	"Iqbal",
+    "Irfan",  	"Imam",  	"Isam",  	"Imram",
+    "Ibraheem",  	"Izz-ud-din",  	"Izz-al-din",  	"Ilan",
+    "Ilhan",	"Illan",	"Imad",	"Imed",
+    "Issam",	"Idriss",	"Idris",	"Ismail",
+    "Imran",	"Imrane",	"Ishak",	"Ilyess",
+    "Ibrahim",	"Ibrahima",	"Ismet",	"Ikhlas",
+    "Islem", "Jibril",  	"Jamil",  	"Jabir",  	"Jabr",
+    "Juda",  	"Jalal",  	"Jabbar",  	"Junayd",
+    "Jafar",  	"Jaffar",  	"Jaffer",  	"Jamaal",
+    "Jameel",  	"Jabril",  	"Junaid",  	"Joudi",
+    "Jawad",	"Jawed",	"Jounaidi",	"Jamal",
+    "Jamel",	"Jad",	"Jahid"
 };
 QVector<QString> Peuple::PRENOMS_SAABI_FEMELLES = {
     "Atiqua", "Abir", "Abla", "Afaf", "Ahida", "Ahlam", "Aïcha", "Alia", "Alma", "Alya", "Amal", "Amina",
@@ -921,17 +936,31 @@ QVector<QString> Peuple::PRENOMS_SAABI_FEMELLES = {
     "Farida",	"Faïza",	"Fatiha", "Galila",  	"Gamal",  	"Gamila",  	"Gathbiyya",
     "Gauhar",  	"Gawahir",  	"Gazbiyya",  	"Ghadir",
     "Ghaliya", 	"Ghufran",  	"Ghada",	"Ghizlène",
-    "Ghania",	"Garmia",	"Ghalia"
+    "Ghania",	"Garmia",	"Ghalia", "Hadil",  	"Hadiyya",  	"Hadjara",  	"Hadya",
+    "Hafsah",  	"Hafza",  	"Hagir",  	"Haifa",
+    "Hanaa",  	"Haniyya",  	"Hawa",  	"Hayfa",
+    "Hikmat",  	"Hooda",  	"Huda",  	"Hamida",
+    "Habiba",	"Hala",	"Hasna",	"Hadda",
+    "Hacina",	"Hébara",	"Hilal",	"Hanifa",
+    "Hiba",	"Hanane",	"Hakim",	"Haoua",
+    "Hana",	"Halima",	"Houda",	"Hafsa",
+    "Hadjar",	"Hadjira",	"Hadia",	"Hadja",
+    "Hafida",	"Houria",	"Hassiba",	"Hania",
+    "Hind",	"Hajar",	"Hosnia",	"Hayet", "Ibtihaj",  	"Ibtisam",  	"Ihab",  	"Ihsan",
+    "Ikraam",  	"Inas",  	"Isra",  	"Israa",
+    "Ismat",  	"Ilyana",	"Imen",	"Iman",
+    "Imene",	"Imane",	"Iklil",	"Insaf",
+    "Ilham",	"Ilhem",	"Izdihar",	"Ikram",
+    "Ikrame",	"Ibtissem",	"Ihsen", "Jameela",  	"Jamillah",  	"Janan",  	"Jathbiyya",
+    "Jathibiyya",  	"Jawahir",  	"Jawdat",  	"Jinan",
+    "Jumana",  	"Jumanah",  	"Jamila",	"Joumana",
+    "Jihane",	"Jalila",	"Johar",	"Jazia",
+    "Jawida"
 };
 
 Peuple Peuple::AleatoireCapharnaum()
 {
-    // construct a trivial random generator engine from a time-based seed:
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine generator(seed);
-    std::uniform_int_distribution<int> distribution(0, 100);
-
-    int val = distribution(generator);
+    int val = Aleatoire::GetAl()->EntierInferieurA(100);
     QString id = "";
     if ( val < 35 )
         id = Peuple::SAABI;

@@ -24,8 +24,15 @@ public:
     static bool EstCavalier(QString metier);
     static bool EstMalandrin(QString metier);
 
+    /**
+      * true si le métier en paramètre peut être celui d'une personne très richement habillée
+      */
+    bool PeutEtreRiche(QString metier);
+
     static QString COURTISAN; // = noble au sens large, peut être diplomate ou autre mais avant tout riche et influent et de famille considérée
     static QString SOLDAT;
+    static QString BANQUIER;
+    static QString DIPLOMATE;
     static QString MERCENAIRE;
     static QString NOMADE;
     static QString FORGERON;
