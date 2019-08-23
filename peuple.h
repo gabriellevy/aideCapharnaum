@@ -44,16 +44,19 @@ public:
     static QVector<QString> PRENOMS_SAABI_MALES;
     static QVector<QString> PRENOMS_SAABI_FEMELLES;
 
+    static QVector<QString> PRENOMS_AGALANTHEEN_MALES;
+    static QVector<QString> PRENOMS_AGALANTHEEN_FEMELLES;
+
     static QVector<QString> PRENOMS_SHIRADIM_MALES;
     static QVector<QString> PRENOMS_SHIRADIM_FEMELLES;
 
-    static QVector<QString> NOMS_ARAGON;
-    static QVector<QString> NOMS_DORKADE;
     static QVector<QString> NOMS_OCCIDENTIN;
     static QVector<QString> PRENOMS_OCCIDENTIN_MALES;
     static QVector<QString> PRENOMS_OCCIDENTIN_FEMELLES;
+    static QVector<QString> NOMS_ARAGON;
     static QVector<QString> PRENOMS_ARAGON_MALES;
     static QVector<QString> PRENOMS_ARAGON_FEMELLES;
+    static QVector<QString> NOMS_DORKADE;
     static QVector<QString> PRENOMS_DORKADE_MALES;
     static QVector<QString> PRENOMS_DORKADE_FEMELLES;
 };

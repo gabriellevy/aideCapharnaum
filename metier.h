@@ -9,7 +9,7 @@ class Metier
 public:
     Metier(QString id);
 
-    QString m_MetierFInal;
+    QString m_MetierFinal;
     QString m_GroupeMetier;
 
     static QList<QString> METIERS;

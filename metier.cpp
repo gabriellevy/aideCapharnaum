@@ -6,19 +6,19 @@ Metier::Metier(QString id):m_GroupeMetier(id)
 {
     // détermination du métier final parmi els sous métiers possibles à partir du métier déterminé
     if (id == "Artisan") {
-        m_MetierFInal = METIERS_ARTISAN[Aleatoire::GetAl()->EntierInferieurA(METIERS_ARTISAN.length())];
+        m_MetierFinal = METIERS_ARTISAN[Aleatoire::GetAl()->EntierInferieurA(METIERS_ARTISAN.length())];
     } else if (id == "Soldat") {
-        m_MetierFInal = id + " ";
-        m_MetierFInal += METIERS_GUERRIER[Aleatoire::GetAl()->EntierInferieurA(METIERS_GUERRIER.length())];
+        m_MetierFinal = id + " ";
+        m_MetierFinal += METIERS_GUERRIER[Aleatoire::GetAl()->EntierInferieurA(METIERS_GUERRIER.length())];
     } else if (id == "Mercenaire") {
-        m_MetierFInal = id + " ";
-        m_MetierFInal += METIERS_GUERRIER[Aleatoire::GetAl()->EntierInferieurA(METIERS_GUERRIER.length())];
+        m_MetierFinal = id + " ";
+        m_MetierFinal += METIERS_GUERRIER[Aleatoire::GetAl()->EntierInferieurA(METIERS_GUERRIER.length())];
     } else if (id == "Artiste") {
-        m_MetierFInal = METIERS_ARTISTE[Aleatoire::GetAl()->EntierInferieurA(METIERS_ARTISTE.length())];
+        m_MetierFinal = METIERS_ARTISTE[Aleatoire::GetAl()->EntierInferieurA(METIERS_ARTISTE.length())];
     } else if (id == "Malandrin") {
-        m_MetierFInal = METIERS_MALANDRINS[Aleatoire::GetAl()->EntierInferieurA(METIERS_MALANDRINS.length())];
+        m_MetierFinal = METIERS_MALANDRINS[Aleatoire::GetAl()->EntierInferieurA(METIERS_MALANDRINS.length())];
     } else {
-        m_MetierFInal = id;
+        m_MetierFinal = id;
     }
 }
 
