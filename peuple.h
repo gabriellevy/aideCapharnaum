@@ -40,12 +40,18 @@ public:
      * @return
      */
     static QString GenererNom(QString peuple, QString sexe, QString sousensemble = "");
+    static QVector<QString> NOMS_ALFARIQN;
+    static QVector<QString> PRENOMS_ALFARIQN_MALES;
+    static QVector<QString> PRENOMS_ALFARIQN_FEMELLES;
+
     static QVector<QString> NOMS_SAABI;
     static QVector<QString> PRENOMS_SAABI_MALES;
     static QVector<QString> PRENOMS_SAABI_FEMELLES;
 
     static QVector<QString> PRENOMS_AGALANTHEEN_MALES;
     static QVector<QString> PRENOMS_AGALANTHEEN_FEMELLES;
+    static QVector<QString> NOMS_AGALANTHEEN_MALES;
+    static QVector<QString> NOMS_AGALANTHEEN_FEMELLES;
 
     static QVector<QString> PRENOMS_SHIRADIM_MALES;
     static QVector<QString> PRENOMS_SHIRADIM_FEMELLES;

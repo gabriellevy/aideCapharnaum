@@ -19,6 +19,7 @@ Sexe::Sexe()
 
     m_Sexe = "";
     if ( ( metier == Metier::BATISSEUR && val < 95) ||
+         metier == Metier::BUCHERON ||
             val < 70 )
         m_Sexe = Sexe::MALE;
     else m_Sexe = Sexe::FEMELLE;
