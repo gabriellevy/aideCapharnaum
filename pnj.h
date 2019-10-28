@@ -1,7 +1,7 @@
 #ifndef PNJ_H
 #define PNJ_H
 
-#include "../destinLib/perso.h"
+//#include "../destinLib/perso.h"
 #include "../destinLib/gestionnairecarac.h"
 
 

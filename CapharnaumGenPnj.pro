@@ -50,6 +50,8 @@ SOURCES += \
     ../destinLib/dbmanager.cpp \
     ../destinLib/gestionnairecarac.cpp \
     ../destinLib/aleatoire.cpp \
+    ../destinLib/execlancerde.cpp \
+    ../destinLib/lancerde.cpp \
     age.cpp \
     genhistgenpnj.cpp \
         main.cpp \
@@ -88,6 +90,8 @@ HEADERS += \
     ../destinLib/dbmanager.h \
     ../destinLib/gestionnairecarac.h \
     ../destinLib/aleatoire.h \
+    ../destinLib/execlancerde.h \
+    ../destinLib/lancerde.h \
     age.h \
     aspectratiolabel.h \
     genhistgenpnj.h \
@@ -107,6 +111,7 @@ FORMS += \
     ../destinLib/evt.ui \
     ../destinLib/histoire.ui \
     ../destinLib/noeud.ui \
+    ../destinLib/lancerde.ui \
     ../destinLib/perso.ui
 
 # Default rules for deployment.

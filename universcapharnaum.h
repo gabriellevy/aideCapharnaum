@@ -14,6 +14,9 @@ public:
 
     Hist* ExecuterGenerateurHistoire();
 
+    static QString GEN_PNJ;
+
+    // capacités de persos
     static QString CARAC_METIER;
     static QString CARAC_PARTICULARITES;
     static QString CARAC_TAILLE;

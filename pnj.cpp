@@ -1,7 +1,6 @@
 #include "pnj.h"
-#include <QTime>
-#include "../destinLib/carac.h"
-#include "../destinLib/gestionnairecarac.h"
+//#include "../destinLib/carac.h"
+//#include "../destinLib/gestionnairecarac.h"
 #include "universcapharnaum.h"
 
 Pnj::Pnj(QString id, QString nom, QString description, QString CheminImagePortrait)
@@ -20,7 +19,7 @@ void Pnj::InitialiserPerso()
                              "Métier",
                              MODE_AFFICHAGE::ma_Texte);
     GestionnaireCarac::GetGestionnaireCarac()->AjouterCarac(caracMetier);
-    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_METIER);
+//    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_METIER);
 
     Carac* caracAge = new Carac(UniversCapharnaum::CARAC_AGE,
                                    UniversCapharnaum::CARAC_AGE,
@@ -29,7 +28,7 @@ void Pnj::InitialiserPerso()
                                    "Âge",
                                    MODE_AFFICHAGE::ma_Nombre);
     GestionnaireCarac::GetGestionnaireCarac()->AjouterCarac(caracAge);
-    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_AGE);
+//    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_AGE);
 
     Carac* caracSexe = new Carac(UniversCapharnaum::CARAC_SEXE,
                                    UniversCapharnaum::CARAC_SEXE,
@@ -38,7 +37,7 @@ void Pnj::InitialiserPerso()
                                    "Sexe",
                                    MODE_AFFICHAGE::ma_Texte);
     GestionnaireCarac::GetGestionnaireCarac()->AjouterCarac(caracSexe);
-    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_SEXE);
+//    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_SEXE);
 
     Carac* caracPeuple = new Carac(UniversCapharnaum::CARAC_PEUPLE,
                                    UniversCapharnaum::CARAC_PEUPLE,
@@ -47,7 +46,7 @@ void Pnj::InitialiserPerso()
                                    "Peuple",
                                    MODE_AFFICHAGE::ma_Texte);
     GestionnaireCarac::GetGestionnaireCarac()->AjouterCarac(caracPeuple);
-    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_PEUPLE);
+//    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_PEUPLE);
 
     Carac* caracSousGroupe = new Carac(UniversCapharnaum::CARAC_SOUS_GROUPE,
                                    UniversCapharnaum::CARAC_SOUS_GROUPE,
@@ -56,7 +55,7 @@ void Pnj::InitialiserPerso()
                                    "Nation / Clan",
                                    MODE_AFFICHAGE::ma_Texte);
     GestionnaireCarac::GetGestionnaireCarac()->AjouterCarac(caracSousGroupe);
-    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_SOUS_GROUPE);
+//    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_SOUS_GROUPE);
 
     Carac* caracTaillec = new Carac(UniversCapharnaum::CARAC_TAILLE,
                              UniversCapharnaum::CARAC_TAILLE,
@@ -65,7 +64,7 @@ void Pnj::InitialiserPerso()
                              "Taille",
                              MODE_AFFICHAGE::ma_Texte);
     GestionnaireCarac::GetGestionnaireCarac()->AjouterCarac(caracTaillec);
-    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_TAILLE);
+//    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_TAILLE);
 
     Carac* caracPartic = new Carac(UniversCapharnaum::CARAC_PARTICULARITES,
                              UniversCapharnaum::CARAC_PARTICULARITES,
@@ -74,7 +73,7 @@ void Pnj::InitialiserPerso()
                              "Particularités physiques",
                              MODE_AFFICHAGE::ma_Texte);
     GestionnaireCarac::GetGestionnaireCarac()->AjouterCarac(caracPartic);
-    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_PARTICULARITES);
+//    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_PARTICULARITES);
 
     Carac* caracParticPsy = new Carac(UniversCapharnaum::CARAC_PARTICUL_PSY,
                              UniversCapharnaum::CARAC_PARTICUL_PSY,
@@ -83,10 +82,8 @@ void Pnj::InitialiserPerso()
                              "Particularités psychologiques",
                              MODE_AFFICHAGE::ma_Texte);
     GestionnaireCarac::GetGestionnaireCarac()->AjouterCarac(caracParticPsy);
-    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_PARTICUL_PSY);
+//    m_CaracsAAfficher.push_back(UniversCapharnaum::CARAC_PARTICUL_PSY);
 }
-
-
 
 UniversCapharnaum* Pnj::GetUniversCapharnaum()
 {

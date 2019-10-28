@@ -1,5 +1,5 @@
 #include "genhistgenpnj.h"
-#include "../destinLib/gestionnairecarac.h"
+//#include "../destinLib/gestionnairecarac.h"
 #include "universcapharnaum.h"
 #include "pnj.h"
 #include "../destinLib/aleatoire.h"
@@ -7,13 +7,14 @@
 #include "peuple.h"
 #include "sexe.h"
 #include "age.h"
-#include "../destinLib/perso.h"
-#include "../destinLib/gestionnairecarac.h"
+//#include "../destinLib/perso.h"
+//#include "../destinLib/gestionnairecarac.h"
 #include "../destinLib/execeffet.h"
 #include "particularitesphysiques.h"
 #include "particularitespsy.h"
+//#include "../destinLib/choix.h"
 
-GenHistGenPnj::GenHistGenPnj(Hist* histoireGeneree):GenHistoire (histoireGeneree) {}
+GenHistGenPnj::GenHistGenPnj():GenHistoire () {}
 
 Hist* GenHistGenPnj::GenererHistoire()
 {
@@ -48,8 +49,6 @@ void GenHistGenPnj::GenererPersos()
 
 void GenHistGenPnj::GenererCaracs()
 {
-    //GetUniversSkaven()->GenererTousLesClans();
-    // initilisée via le perso
 }
 
 Effet* GenHistGenPnj::GenererEffetSelectionPeuple(int index)
@@ -165,7 +164,7 @@ Effet* GenHistGenPnj::GenererEffetSelectionMetier(int index)
     return effet;
 }
 
-Effet* GenHistGenPnj::GenererEffetSelectionAge(int index)
+Effet* GenHistGenPnj::GenererEffetSelectionAge()
 {
     Effet* effet = m_GenerateurEvt->AjouterEffetNarration("Quel est l'âge de votre pnj ?");
 
@@ -209,7 +208,7 @@ Effet* GenHistGenPnj::GenererEffetSelectionSexe(int index)
     return effet;
 }
 
-void DeterminerTailleDepuisCaracs(QString sexe, int age, QString metier, QString peuple, QString sousGroupe)
+void DeterminerTailleDepuisCaracs(QString sexe, QString peuple, QString sousGroupe)
 {
     int val = Aleatoire::GetAl()->EntierInferieurA(21);
     int taille = 0;
@@ -858,7 +857,7 @@ void DeterminerImageDepuisCaracs(QString sexe, int age, QString metier, QString 
     IPerso::GetPersoInterface()->GetPersoCourant()->MajNom(nom);
     IPerso::GetPersoInterface()->RafraichirAffichage();
 
-    Univers::ME->GetExecHistoire()->GetExecEffetActuel(false)->GetEffet()->m_Text += (
+    Univers::ME->GetExecHistoire()->GetExecEffetActuel(false)->GetEffet()->m_Texte += (
                 " " + portrait + "\n" + nom
                 );
 
@@ -881,7 +880,7 @@ void FinaliserPerso()
    QString peuple = GestionnaireCarac::GetCaracValue(UniversCapharnaum::CARAC_PEUPLE);
    QString sousGroupe = GestionnaireCarac::GetCaracValue(UniversCapharnaum::CARAC_SOUS_GROUPE);
 
-   DeterminerTailleDepuisCaracs( sexe, age, metier, peuple, sousGroupe);
+   DeterminerTailleDepuisCaracs( sexe, peuple, sousGroupe);
    DeterminerImageDepuisCaracs( sexe, age, metier, peuple, sousGroupe);
 }
 
@@ -896,7 +895,7 @@ void GenHistGenPnj::GenererBoucleGenerationPersonnage(int index)
     GenererEffetSelectionPeuple(index);
     GenererEffetSelectionNationEscarte(index);
     GenererEffetSelectionSexe(index);
-    GenererEffetSelectionAge(index);
+    GenererEffetSelectionAge();
 
     m_GenerateurEvt->AjouterEffetCallbackDisplay(
                 FinaliserPerso,
